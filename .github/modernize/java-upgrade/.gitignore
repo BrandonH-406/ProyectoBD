@@ -1,0 +1,18 @@
+# Spring Boot
+.gradle/
+build/
+target/
+.settings/
+.classpath
+.project/
+.idea/
+*.iml
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
