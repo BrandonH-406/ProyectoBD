@@ -76,6 +76,7 @@ public class CategoriaController {
                         break;
                     case "descripcion":
                         categoria.setDescripcion((String) value);
+                        break;
                 }
             });
 
@@ -85,7 +86,7 @@ public class CategoriaController {
         }
     }
 
-    @DeleteMapping("/deleteEditorial{id}")
+    @DeleteMapping("/deleteCategoria/{id}")
     public void DeleteCategoria(@PathVariable("id") int id) {
         Optional<Categoria> categoriaOptional = categoriaService.findById(id);
         if (categoriaOptional.isPresent()) {

@@ -94,7 +94,7 @@ public class UbicacionController {
         }
     }
 
-    @DeleteMapping("/deleteUbicacion{id}")
+    @DeleteMapping("/deleteUbicacion/{id}")
     public void DeleteUbicacion(@PathVariable("id") int id) {
         Optional<Ubicacion> ubicacionOptional = ubicacionService.findById(id);
         if (ubicacionOptional.isPresent()) {

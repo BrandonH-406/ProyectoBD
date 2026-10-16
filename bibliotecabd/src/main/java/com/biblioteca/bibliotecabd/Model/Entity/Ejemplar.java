@@ -1,7 +1,11 @@
 package com.biblioteca.bibliotecabd.Model.Entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "prestamoDetalle" })
 @Table(name = "ejemplar")
 public class Ejemplar {
 
@@ -21,7 +27,7 @@ public class Ejemplar {
     private int idEjemplar;
 
     @Column(name = "fecha_adquisicion")
-    private Date fechaAdquisicion;
+    private LocalDate fechaAdquisicion;
 
     @Column(name = "costo")
     private double costo;
@@ -33,7 +39,7 @@ public class Ejemplar {
     private String estado;
 
     @Column(name = "fecha_registro")
-    private Date fechaRegistro;
+    private LocalDate fechaRegistro;
 
     @ManyToOne
     @JoinColumn(name = "id_libro", nullable = false)
@@ -43,7 +49,10 @@ public class Ejemplar {
     @JoinColumn(name = "id_ubicacion", nullable = false)
     private Ubicacion ubicacion;
 
-    public Ejemplar(Date fechaAdquisicion, double costo, String condicion, String estado, Date fechaRegistro,
+    @OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PrestamoDetalle> prestamoDetalle;
+
+    public Ejemplar(LocalDate fechaAdquisicion, double costo, String condicion, String estado, LocalDate fechaRegistro,
             Libro libro, Ubicacion ubicacion) {
         this.fechaAdquisicion = fechaAdquisicion;
         this.costo = costo;
@@ -62,11 +71,11 @@ public class Ejemplar {
         this.idEjemplar = idEjemplar;
     }
 
-    public Date getFechaAdquisicion() {
+    public LocalDate getFechaAdquisicion() {
         return fechaAdquisicion;
     }
 
-    public void setFechaAdquisicion(Date fechaAdquisicion) {
+    public void setFechaAdquisicion(LocalDate fechaAdquisicion) {
         this.fechaAdquisicion = fechaAdquisicion;
     }
 
@@ -94,11 +103,11 @@ public class Ejemplar {
         this.estado = estado;
     }
 
-    public Date getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Date fechaRegistro) {
+    public void setFechaRegistro(LocalDate fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
@@ -117,5 +126,4 @@ public class Ejemplar {
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
-
 }

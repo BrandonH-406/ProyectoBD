@@ -95,7 +95,7 @@ public class EditorialController {
     }
 
 
-    @DeleteMapping ("/deleteEditorial{id}")
+    @DeleteMapping ("/deleteEditorial/{id}")
     public void DeleteEditorial(@PathVariable ("id") int id){
         Optional<Editorial> editorOptional = editorialService.findById(id);
         if(editorOptional.isPresent()){
