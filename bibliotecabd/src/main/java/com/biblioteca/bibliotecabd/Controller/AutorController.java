@@ -90,7 +90,7 @@ public class AutorController {
         }
     }
 
-    @DeleteMapping("/deleteAutor{id}")
+    @DeleteMapping("/deleteAutor/{id}")
     public void DeleteAutor(@PathVariable("id") int id) {
         Optional<Autor> AutorOptional = autorService.findById(id);
         if (AutorOptional.isPresent()) {
