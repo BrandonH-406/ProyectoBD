@@ -1,7 +1,10 @@
 package com.biblioteca.bibliotecabd.Service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+import com.biblioteca.bibliotecabd.Model.Entity.Prestamo;
 import com.biblioteca.bibliotecabd.Model.Repository.PrestamoRepository;
 
 @Service 
@@ -11,6 +14,22 @@ public class PrestamoService {
 
     public PrestamoService(PrestamoRepository prestamoRepository){
         this.prestamoRepository = prestamoRepository;
+    }
+
+    public List<Prestamo> getAllPrestamos() {
+        return (List<Prestamo>) prestamoRepository.findAll();
+    }
+
+    public Optional<Prestamo> findById(int id) {
+        return prestamoRepository.findById(id);
+    }
+
+    public Prestamo save(Prestamo prestamo) {
+        return prestamoRepository.save(prestamo);
+    }
+
+    public void delete(Prestamo prestamo) {
+        prestamoRepository.delete(prestamo);
     }
 
 }

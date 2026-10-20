@@ -1,7 +1,11 @@
 package com.biblioteca.bibliotecabd.Model.Entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,9 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "renovacion", "devolucion", "multa" })
 @Table(name = "prestamo_detalle")
 public class PrestamoDetalle {
 
@@ -28,6 +34,15 @@ public class PrestamoDetalle {
 
     @Column(name = "estado")
     private String estado;
+
+    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Renovacion> renovacion;
+
+    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Devolucion> devolucion;
+
+    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Multa> multa;
 
     public int getIdDetalle() {
         return idDetalle;
