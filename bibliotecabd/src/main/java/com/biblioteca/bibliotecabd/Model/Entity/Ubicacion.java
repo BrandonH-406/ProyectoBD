@@ -38,6 +38,10 @@ public class Ubicacion {
     @OneToMany(mappedBy = "ubicacion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ejemplar> ejemplar;
 
+    public Ubicacion(){
+        
+    }
+
     public Ubicacion(String sala, String estanteria, int nivel, String descripcion) {
         this.sala = sala;
         this.estanteria = estanteria;

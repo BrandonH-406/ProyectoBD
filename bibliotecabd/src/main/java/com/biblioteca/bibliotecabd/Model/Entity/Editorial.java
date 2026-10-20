@@ -75,17 +75,12 @@ public class Editorial {
         this.estado = estado;
     }
 
-    public List<Libro> getDetallePedido() {
-        return libro;
-    }
-
-    public void setDetallePedido(List<Libro> libro) {
-        this.libro = libro;
-    }
-
     @OneToMany(mappedBy = "editorial", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Libro> libro;
 
+    public Editorial(){
+
+    }
     public Editorial(String nombre, String pais, String sitioWeb, char estado) {
         this.nombre = nombre;
         this.pais = pais;

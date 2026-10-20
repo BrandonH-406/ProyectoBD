@@ -52,6 +52,9 @@ public class Ejemplar {
     @OneToMany(mappedBy = "ejemplar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrestamoDetalle> prestamoDetalle;
 
+    public Ejemplar(){
+        
+    }
     public Ejemplar(LocalDate fechaAdquisicion, double costo, String condicion, String estado, LocalDate fechaRegistro,
             Libro libro, Ubicacion ubicacion) {
         this.fechaAdquisicion = fechaAdquisicion;

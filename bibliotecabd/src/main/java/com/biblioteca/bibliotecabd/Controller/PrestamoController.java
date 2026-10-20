@@ -1,6 +1,5 @@
 package com.biblioteca.bibliotecabd.Controller;
 
-import com.biblioteca.bibliotecabd.Service.RenovacionService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class PrestamoController {
     private final PrestamoService prestamoService;
 
     public PrestamoController(PrestamoService prestamoService) {
-        this.prestamoService = prestamoService;        
+        this.prestamoService = prestamoService;      
     }
 
     @GetMapping("/listaPrestamo")
@@ -107,6 +106,11 @@ public class PrestamoController {
         if (Optional.isPresent()) {
             prestamoService.delete(Optional.get());
         }
+    }
+
+    @GetMapping ("/PrestamosUsuari/{codigo}")
+        public List<Prestamo> PrestamosPorUsuario(@PathVariable ("codigo") String codigo){
+            return prestamoService.PrestamosUsuarios(codigo);        
     }
 
 }

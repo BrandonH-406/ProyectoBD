@@ -120,4 +120,9 @@ public class EjemplarController {
         }
     }
 
+    @GetMapping ("/countEjemplares/{idLibro}/{estado}")
+    public int CountEjemplares(@PathVariable ("idLibro") int libro, @PathVariable ("estado") String estado){
+        return ejemplarService.CountEjemplares(libro, estado);
+    }
+
 }

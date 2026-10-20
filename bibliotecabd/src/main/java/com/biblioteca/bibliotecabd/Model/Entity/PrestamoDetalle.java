@@ -100,6 +100,10 @@ public class PrestamoDetalle {
     @JoinColumn(name = "id_ejemplar", nullable = false)
     private Ejemplar ejemplar;
 
+    public PrestamoDetalle(){
+        
+    }
+
     public PrestamoDetalle(LocalDate fechaDevolucionPrevista, int renovaciones, String estado, Prestamo prestamo,
             Ejemplar ejemplar) {
         this.fechaDevolucionPrevista = fechaDevolucionPrevista;

@@ -50,6 +50,10 @@ public class Multa {
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
 
+
+    public Multa(){
+        
+    }
     public Multa(String tipo, double monto, LocalDate fechaGeneracion, String estado, LocalDate fechaPago,
             String observaciones, PerBiblioteca cobradoPor, PrestamoDetalle detalle, Usuario usuario) {
         this.tipo = tipo;
