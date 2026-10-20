@@ -11,6 +11,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -36,10 +38,77 @@ public class Prestamo {
     @OneToMany(mappedBy = "prestamo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PrestamoDetalle> prestamoDetalle;
 
-    public Prestamo(LocalDate fechaPrestamo, String estado, String observaciones) {
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_bibliotecario", nullable = false)
+    private PerBiblioteca bibliotecario;
+
+    public Prestamo(LocalDate fechaPrestamo, String estado, String observaciones, Usuario usuario,
+            PerBiblioteca bibliotecario) {
         this.fechaPrestamo = fechaPrestamo;
         this.estado = estado;
         this.observaciones = observaciones;
+        this.usuario = usuario;
+        this.bibliotecario = bibliotecario;
+    }
+
+    public int getIdPrestamo() {
+        return idPrestamo;
+    }
+
+    public void setIdPrestamo(int idPrestamo) {
+        this.idPrestamo = idPrestamo;
+    }
+
+    public LocalDate getFechaPrestamo() {
+        return fechaPrestamo;
+    }
+
+    public void setFechaPrestamo(LocalDate fechaPrestamo) {
+        this.fechaPrestamo = fechaPrestamo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    public List<PrestamoDetalle> getPrestamoDetalle() {
+        return prestamoDetalle;
+    }
+
+    public void setPrestamoDetalle(List<PrestamoDetalle> prestamoDetalle) {
+        this.prestamoDetalle = prestamoDetalle;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public PerBiblioteca getBibliotecario() {
+        return bibliotecario;
+    }
+
+    public void setBibliotecario(PerBiblioteca bibliotecario) {
+        this.bibliotecario = bibliotecario;
     }
 
 }
