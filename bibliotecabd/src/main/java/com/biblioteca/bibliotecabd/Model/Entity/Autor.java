@@ -24,6 +24,10 @@ public class Autor {
 
     @Column(name = "nacionalidad")
     private String nacionalidad;
+    
+    public Autor(){
+        
+    }
 
     public Autor(String nombres, String apellidos, String nacionalidad) {
         this.nombres = nombres;

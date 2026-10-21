@@ -37,6 +37,10 @@ public class Renovacion {
     @JoinColumn(name = "id_detalle", nullable = false)
     private PrestamoDetalle detalle;
 
+    public Renovacion(){
+
+    }
+    
     public Renovacion(LocalDate fechaRenovacion, LocalDate fechaPrevistaAnt, LocalDate fechaPrevistaNueva,
             PerBiblioteca autorizadoPor, PrestamoDetalle detalle) {
         this.fechaRenovacion = fechaRenovacion;

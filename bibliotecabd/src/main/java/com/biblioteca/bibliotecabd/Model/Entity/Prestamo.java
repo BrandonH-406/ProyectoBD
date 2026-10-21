@@ -46,6 +46,10 @@ public class Prestamo {
     @JoinColumn(name = "id_bibliotecario", nullable = false)
     private PerBiblioteca bibliotecario;
 
+    public Prestamo(){
+
+    }
+    
     public Prestamo(LocalDate fechaPrestamo, String estado, String observaciones, Usuario usuario,
             PerBiblioteca bibliotecario) {
         this.fechaPrestamo = fechaPrestamo;

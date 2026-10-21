@@ -37,4 +37,8 @@ public class LibroService {
         return libroRepository.findByTituloLike(titulo);
     }
 
+    public List<Libro> LibrosPorCategia(String categoria){
+        return libroRepository.findTitulosPorCategoria(categoria);
+    }
+
 }

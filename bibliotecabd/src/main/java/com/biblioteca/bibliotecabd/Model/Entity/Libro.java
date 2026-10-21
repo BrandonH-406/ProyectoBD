@@ -65,6 +65,9 @@ public class Libro {
     @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ejemplar> ejemplar;
 
+    public Libro(){
+        
+    }
     public Libro(String titulo, int anioPublicacion, int edicion, int numPaginas, String descripcion, char estado,
             LocalDate fechaRegistrado, Editorial editorial, Categoria categoria, String idioma,
             PerBiblioteca registradoPor) {

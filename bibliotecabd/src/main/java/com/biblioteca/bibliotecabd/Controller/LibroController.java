@@ -137,4 +137,9 @@ public class LibroController {
         }
     }
 
+    @GetMapping ("/LibrosCategoria/{categoria}")
+    public List<Libro> LibrosPorCategoria(@PathVariable ("categoria") String categoria){
+        return libroService.LibrosPorCategia(categoria);
+    }
+
 }

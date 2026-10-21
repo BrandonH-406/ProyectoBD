@@ -53,6 +53,10 @@ public class PerBiblioteca {
     @OneToMany(mappedBy = "bibliotecario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Prestamo> prestamo;
 
+    public PerBiblioteca(){
+        
+    }
+
     public PerBiblioteca(Usuario usuario, String codigoEmpleado, String puesto, Date fechaContratacion) {
         this.usuario = usuario;
         this.codigoEmpleado = codigoEmpleado;

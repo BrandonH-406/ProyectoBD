@@ -40,6 +40,9 @@ public class Devolucion {
     @JoinColumn(name = "recibido_por", nullable = false)
     private PerBiblioteca recibidoPor;
 
+    public Devolucion(){
+        
+    }
     public Devolucion(LocalDate fechaDevolucion, String condicionEjemplar, String observaciones, int diasAtraso,
             PrestamoDetalle detalle, PerBiblioteca recibidoPor) {
         this.fechaDevolucion = fechaDevolucion;

@@ -33,4 +33,8 @@ public class EjemplarService {
         ejemeplarRepository.delete(ejemplar);
     }
 
+    public int CountEjemplares(int idLibro, String estado){
+        return ejemeplarRepository.CantidadEjemplares(idLibro, estado);
+    }
+
 }

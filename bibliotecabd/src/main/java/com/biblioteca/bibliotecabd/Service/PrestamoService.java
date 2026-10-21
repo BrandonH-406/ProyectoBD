@@ -32,4 +32,8 @@ public class PrestamoService {
         prestamoRepository.delete(prestamo);
     }
 
+    public List<Prestamo> PrestamosUsuarios(String idenficador){
+        return prestamoRepository.findPrestamosPorCarneOCodigoEmpleado(idenficador);
+    }
+
 }
