@@ -1,9 +1,5 @@
 package com.biblioteca.bibliotecabd.Controller;
 
-import com.biblioteca.bibliotecabd.Controller.EstudianteController;
-import com.biblioteca.bibliotecabd.Model.Repository.EstudianteRepository;
-import com.biblioteca.bibliotecabd.Service.EstudianteService;
-import com.biblioteca.bibliotecabd.Service.RenovacionService;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.biblioteca.bibliotecabd.Model.Entity.Estudiante;
 import com.biblioteca.bibliotecabd.Model.Entity.PerBiblioteca;
 import com.biblioteca.bibliotecabd.Model.Entity.Prestamo;
 import com.biblioteca.bibliotecabd.Model.Entity.Usuario;
