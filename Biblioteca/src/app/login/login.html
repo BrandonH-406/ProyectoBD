@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesión - Mi Librería</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <main class="stage">
+        <section class="login" aria-labelledby="login-title">
+            <h1 id="login-title">Iniciar sesión</h1>
+
+            <form id="loginForm" novalidate>
+                <div class="field">
+                    <label for="username">Nombre de Usuario</label>
+                    <input [(ngModel)]="Administrador.username" type="text" id="username" name="username"
+                        autocomplete="username" required>
+                    <small class="error" id="usernameError"></small>
+                </div>
+
+                <div class="field">
+                    <label for="password">Contraseña</label>
+                    <input [(ngModel)]="Administrador.passwordHash" type="password" id="password" name="password"
+                        autocomplete="current-password" required>
+                    <small class="error" id="passwordError"></small>
+                </div>
+
+                <div class="row">
+                    <label class="check">
+                        <input type="checkbox" name="remember">
+                        <span>Recordarme</span>
+                    </label>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button (click)=login() type="submit" class="btn">Iniciar sesión</button>
+            </form>
+
+            <p class="signup">¿Aún no tienes cuenta? <a href="#">Crear cuenta</a></p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-brand">Mi Librería</div>
+        <div class="footer-links">
+            <a href="#">Condiciones de envío</a>
+            <a href="#">Formas de pago</a>
+            <a href="#">Política de cambios</a>
+            <a href="#">Contacto</a>
+        </div>
+    </footer>
+
+    <script>
+        // Validación básica en el navegador (cámbiala por tu lógica real)
+        const form = document.getElementById('loginForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = form.email.value.trim();
+            const pass = form.password.value;
+            const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+            document.getElementById('emailError').textContent =
+                okEmail ? '' : 'Ingresa un correo válido.';
+            document.getElementById('passwordError').textContent =
+                pass.length >= 6 ? '' : 'La contraseña debe tener al menos 6 caracteres.';
+
+            if (okEmail && pass.length >= 6) {
+                // Aquí va tu petición de login
+                console.log('Login válido');
+            }
+        });
+    </script>
+</body>
+
+</html>
