@@ -25,7 +25,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
-    private int idUsuario;
+    private Integer idUsuario;
 
     @ManyToOne
     @JoinColumn(name = "id_rol", nullable = false)
@@ -59,7 +59,7 @@ public class Usuario {
     private String passwordHash;
 
     @Column(name = "intentos_fallidos")
-    private int intentosFallidos;
+    private Integer intentosFallidos;
 
     @Column(name = "ultimo_acceso")
     private Timestamp ultimoAcceso;
@@ -80,7 +80,7 @@ public class Usuario {
     }
 
     public Usuario(Rol rol, String dpi, String nombres, String apellidos, Date fechaNacimiento, String email,
-            String telefono, String direccion, String username, String passwordHash, int intentosFallidos,
+            String telefono, String direccion, String username, String passwordHash, Integer intentosFallidos,
             Timestamp ultimoAcceso, String estado, Date fechaRegistro) {
         this.rol = rol;
         this.dpi = dpi;
@@ -102,7 +102,7 @@ public class Usuario {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -190,7 +190,7 @@ public class Usuario {
         return intentosFallidos;
     }
 
-    public void setIntentosFallidos(int intentosFallidos) {
+    public void setIntentosFallidos(Integer intentosFallidos) {
         this.intentosFallidos = intentosFallidos;
     }
 
