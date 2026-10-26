@@ -30,8 +30,15 @@ export class Login {
     validar(data:any){
     if(data){
       console.log(data);
-      location.href="/administrador";
       localStorage.setItem("administrador",JSON.stringify(data));
+      if(data.rol.nombre == "Administrador"){
+        location.href="/administrador";
+      } else if(data.rol.nombre == "Bibliotecario"){
+        location.href="/bibliotecario";
+      } else{
+        localStorage.clear();
+        alert("Este usuario no tiene acceso");
+      }
     } else{
       alert("Usuario o Password invalido");
     }

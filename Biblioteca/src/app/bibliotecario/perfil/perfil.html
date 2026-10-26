@@ -1,0 +1,35 @@
+<section class="panel">
+    <h2>Mi perfil</h2>
+    <dl class="datos">
+        <dt>Nombre</dt>
+        <dd>{{ usuario.nombres }} {{ usuario.apellidos }}</dd>
+        <dt>Usuario</dt>
+        <dd>{{ usuario.username }}</dd>
+        <dt>Rol</dt>
+        <dd>{{ usuario.rol?.nombre }}</dd>
+        <dt>DPI</dt>
+        <dd>{{ usuario.dpi }}</dd>
+        <dt>Fecha de nacimiento</dt>
+        <dd>{{ usuario.fechaNacimiento | date: 'dd/MM/yyyy' }}</dd>
+        <dt>Correo</dt>
+        <dd>{{ usuario.email }}</dd>
+        <dt>Teléfono</dt>
+        <dd>{{ usuario.telefono }}</dd>
+        <dt>Dirección</dt>
+        <dd>{{ usuario.direccion }}</dd>
+        <dt>Estado</dt>
+        <dd>{{ usuario.estado }}</dd>
+    </dl>
+</section>
+
+<section class="panel">
+    <h2>Datos de empleado</h2>
+    <dl class="datos">
+        <dt>Código de empleado</dt>
+        <dd>{{ Personal.codigoEmpleado || '—' }}</dd>
+        <dt>Puesto</dt>
+        <dd>{{ Personal.puesto || '—' }}</dd>
+        <dt>Fecha de contratación</dt>
+        <dd>{{ (Personal.fechaContratacion | date: 'dd/MM/yyyy') || '—' }}</dd>
+    </dl>
+</section>

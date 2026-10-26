@@ -1,0 +1,88 @@
+<section class="panel">
+    <h2>{{ Libro.idLibro ? 'Actualizar libro' : 'Agregar libro' }}</h2>
+    <form (ngSubmit)="guardar()">
+        <div class="campos">
+            <label class="ancho">Título
+                <input [(ngModel)]="Libro.titulo" name="titulo" required>
+            </label>
+            <label>Editorial
+                <select [(ngModel)]="Libro.editorial.idEditorial" name="editorial" required>
+                    @for (e of Editoriales; track e.idEditorial) {
+                    <option [ngValue]="e.idEditorial">{{ e.nombre }}</option>
+                    }
+                </select>
+            </label>
+            <label>Categoría
+                <select [(ngModel)]="Libro.categoria.idCategoria" name="categoria" required>
+                    @for (c of Categorias; track c.idCategoria) {
+                    <option [ngValue]="c.idCategoria">{{ c.nombre }}</option>
+                    }
+                </select>
+            </label>
+            <label>Año de publicación
+                <input [(ngModel)]="Libro.anioPublicacion" name="anioPublicacion" type="number">
+            </label>
+            <label>Edición
+                <input [(ngModel)]="Libro.edicion" name="edicion" type="number">
+            </label>
+            <label>Idioma
+                <input [(ngModel)]="Libro.idioma" name="idioma">
+            </label>
+            <label>Número de páginas
+                <input [(ngModel)]="Libro.numPaginas" name="numPaginas" type="number">
+            </label>
+            <label>Estado
+                <select [(ngModel)]="Libro.estado" name="estado">
+                    <option value="A">Activo</option>
+                    <option value="I">Inactivo</option>
+                </select>
+            </label>
+            <label class="ancho">Descripción
+                <textarea [(ngModel)]="Libro.descripcion" name="descripcion" rows="3"></textarea>
+            </label>
+        </div>
+        <div class="acciones">
+            <button type="submit" class="btn">Guardar</button>
+            @if (Libro.idLibro) {
+            <button type="button" class="btn sec" (click)="cancelar()">Cancelar</button>
+            }
+        </div>
+    </form>
+</section>
+
+<h2>Libros registrados</h2>
+<div class="filtro">
+    <input [(ngModel)]="buscar" name="buscar" placeholder="Buscar por título">
+</div>
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Editorial</th>
+                <th>Categoría</th>
+                <th>Año</th>
+                <th>Idioma</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (l of librosFiltrados(); track l.idLibro) {
+            <tr>
+                <td>{{ l.titulo }}</td>
+                <td>{{ l.editorial?.nombre }}</td>
+                <td>{{ l.categoria?.nombre }}</td>
+                <td>{{ l.anioPublicacion }}</td>
+                <td>{{ l.idioma }}</td>
+                <td>{{ l.estado == 'A' ? 'Activo' : 'Inactivo' }}</td>
+                <td><button class="btn small" (click)="editar(l)">Editar</button></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="7" class="vacio">No hay libros registrados</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

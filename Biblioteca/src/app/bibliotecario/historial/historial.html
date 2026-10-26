@@ -1,0 +1,66 @@
+<section class="panel">
+    <h2>Historial de préstamos</h2>
+    <form class="filtro" (ngSubmit)="buscarUsuario()">
+        <input [(ngModel)]="codigo" name="codigo" placeholder="Carné o código de empleado">
+        <button type="submit" class="btn">Buscar</button>
+        <button type="button" class="btn sec" (click)="limpiar()">Limpiar</button>
+    </form>
+
+    @if (Usuario) {
+    <div class="tarjeta">
+        <div>
+            <strong>{{ Usuario.nombres }} {{ Usuario.apellidos }}</strong>
+            <span class="vacio">{{ Usuario.rol.nombre }} · {{ Usuario.estado }}</span>
+        </div>
+        <div>Vigentes: <strong>{{ contar('VIGENTE') }}</strong></div>
+        <div>Vencidos: <strong>{{ contar('VENCIDO') }}</strong></div>
+        <div>Devueltos: <strong>{{ contar('DEVUELTO') }}</strong></div>
+    </div>
+    }
+</section>
+
+@if (Usuario) {
+<div class="filtro">
+    <select [(ngModel)]="estadoFiltro" name="estadoFiltro">
+        <option value="">Todos</option>
+        <option value="VIGENTE">Vigentes</option>
+        <option value="VENCIDO">Vencidos</option>
+        <option value="DEVUELTO">Devueltos</option>
+    </select>
+    <span class="vacio">{{ detallesFiltrados().length }} libro(s)</span>
+</div>
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Préstamo</th>
+                <th>Libro</th>
+                <th>Fecha préstamo</th>
+                <th>Devolver el</th>
+                <th>Devuelto el</th>
+                <th>Atraso</th>
+                <th>Renovaciones</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (d of detallesFiltrados(); track d.idDetalle) {
+            <tr>
+                <td>#{{ d.prestamo.idPrestamo }}</td>
+                <td>{{ d.ejemplar.libro.titulo }} <span class="vacio">(ej. #{{ d.ejemplar.idEjemplar }})</span></td>
+                <td>{{ d.prestamo.fechaPrestamo }}</td>
+                <td>{{ d.fechaDevolucionPrevista }}</td>
+                <td>{{ Devoluciones[d.idDetalle]?.fechaDevolucion || '—' }}</td>
+                <td>{{ Devoluciones[d.idDetalle] ? Devoluciones[d.idDetalle].diasAtraso + ' día(s)' : '—' }}</td>
+                <td>{{ d.renovaciones }}</td>
+                <td><span class="etiqueta" [class]="estadoDetalle(d)">{{ estadoDetalle(d) }}</span></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="8" class="vacio">El usuario no tiene préstamos</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
