@@ -1,0 +1,67 @@
+<section class="panel">
+    <h2>Renovar préstamos</h2>
+    <form class="filtro" (ngSubmit)="buscarUsuario()">
+        <input [(ngModel)]="codigo" name="codigo" placeholder="Carné o código de empleado">
+        <button type="submit" class="btn">Buscar</button>
+        <button type="button" class="btn sec" (click)="limpiar()">Limpiar</button>
+    </form>
+
+    @if (Resumen) {
+    <div class="tarjeta">
+        <div>
+            <strong>{{ Resumen.usuario.nombres }} {{ Resumen.usuario.apellidos }}</strong>
+            <span class="vacio">{{ Resumen.usuario.rol.nombre }} · {{ Resumen.usuario.estado }}</span>
+        </div>
+        <div>Renovaciones permitidas: <strong>{{ Resumen.usuario.rol.maxRenovaciones }}</strong></div>
+        <div>Días por renovación: <strong>{{ Resumen.usuario.rol.diasPrestamo }}</strong></div>
+        <div>Multas pendientes: <strong>{{ Resumen.multasPendientes }}</strong></div>
+    </div>
+    @if (Resumen.multasPendientes > 0) {
+    <p class="alerta">El usuario tiene multas pendientes. No puede renovar hasta pagarlas.</p>
+    }
+    }
+</section>
+
+@if (Resumen) {
+<h2>Libros prestados</h2>
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Préstamo</th>
+                <th>Libro</th>
+                <th>Fecha préstamo</th>
+                <th>Devolver el</th>
+                <th>Renovaciones</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (d of Prestados; track d.idDetalle) {
+            <tr>
+                <td>#{{ d.prestamo.idPrestamo }}</td>
+                <td>{{ d.ejemplar.libro.titulo }} <span class="vacio">(ej. #{{ d.ejemplar.idEjemplar }})</span></td>
+                <td>{{ d.prestamo.fechaPrestamo }}</td>
+                <td>{{ d.fechaDevolucionPrevista }}</td>
+                <td>{{ d.renovaciones }} / {{ Resumen.usuario.rol.maxRenovaciones }}</td>
+                <td><span class="etiqueta" [class]="estadoDetalle(d)">{{ estadoDetalle(d) }}</span></td>
+                <td>
+                    @if (estadoDetalle(d) == 'VENCIDO') {
+                    <span class="vacio">Debe devolverlo</span>
+                    } @else if (d.renovaciones >= Resumen.usuario.rol.maxRenovaciones) {
+                    <span class="vacio">Sin renovaciones</span>
+                    } @else {
+                    <button class="btn small" (click)="renovar(d)">Renovar</button>
+                    }
+                </td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="7" class="vacio">El usuario no tiene libros prestados</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}

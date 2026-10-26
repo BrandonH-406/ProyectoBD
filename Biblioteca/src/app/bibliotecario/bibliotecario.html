@@ -1,0 +1,24 @@
+<div class="strip"></div>
+<header class="head">
+    <a class="logo" routerLink="/bibliotecario" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+            class="word">MI LIBRERÍA</span></a>
+    <span class="muted">{{ Bibliotecario.nombres }} {{ Bibliotecario.apellidos }}</span>
+    <a class="phone" href="#" (click)="logout()">Cerrar sesión</a>
+</header>
+<nav class="nav" aria-label="Principal">
+    <a routerLink="libros" routerLinkActive="active">Libros</a>
+    <a routerLink="ejemplares" routerLinkActive="active">Ejemplares</a>
+    <a routerLink="prestamos" routerLinkActive="active">Préstamos</a>
+    <a routerLink="renovaciones" routerLinkActive="active">Renovaciones</a>
+    <a routerLink="devoluciones" routerLinkActive="active">Devoluciones</a>
+    <a routerLink="historial" routerLinkActive="active">Historial de Préstamos</a>
+    <a routerLink="perfil" routerLinkActive="active">Mi Perfil</a>
+</nav>
+
+<main class="wrap">
+    <router-outlet />
+</main>
+
+<footer class="footer">
+    <p class="copy">© 2026 Mi Librería</p>
+</footer>

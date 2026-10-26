@@ -1,0 +1,114 @@
+<section class="panel">
+    <h2>Realizar préstamo</h2>
+    <form class="filtro" (ngSubmit)="buscarUsuario()">
+        <input [(ngModel)]="codigo" name="codigo" placeholder="Carné o código de empleado">
+        <button type="submit" class="btn">Buscar</button>
+        <button type="button" class="btn sec" (click)="limpiar()">Limpiar</button>
+    </form>
+
+    @if (Resumen) {
+    <div class="tarjeta">
+        <div>
+            <strong>{{ Resumen.usuario.nombres }} {{ Resumen.usuario.apellidos }}</strong>
+            <span class="vacio">{{ Resumen.usuario.rol.nombre }} · {{ Resumen.usuario.estado }}</span>
+        </div>
+        <div>Prestados: <strong>{{ Resumen.prestados }} / {{ Resumen.usuario.rol.maxPrestamos }}</strong></div>
+        <div>Días de préstamo: <strong>{{ Resumen.usuario.rol.diasPrestamo }}</strong></div>
+        <div>Multas pendientes: <strong>{{ Resumen.multasPendientes }}</strong></div>
+    </div>
+
+    @if (Resumen.usuario.estado != 'ACTIVO') {
+    <p class="alerta">El usuario está {{ Resumen.usuario.estado }} y no puede llevar libros.</p>
+    } @else if (Resumen.multasPendientes > 0) {
+    <p class="alerta">El usuario tiene multas pendientes. Debe pagarlas antes de llevar libros.</p>
+    } @else {
+    <h3>Ejemplares a prestar ({{ Seleccionados.length }})</h3>
+    <div class="tabla-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Libro</th>
+                    <th>Ubicación</th>
+                    <th>Condición</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (e of Seleccionados; track e.idEjemplar) {
+                <tr>
+                    <td>{{ e.idEjemplar }}</td>
+                    <td>{{ e.libro?.titulo }}</td>
+                    <td>{{ e.ubicacion?.sala }} - {{ e.ubicacion?.estanteria }}</td>
+                    <td>{{ e.condicion }}</td>
+                    <td><button class="btn small sec" (click)="quitar(e)">Quitar</button></td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="5" class="vacio">Agregue ejemplares de la lista de abajo</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="campos">
+        <label class="ancho">Observaciones
+            <textarea [(ngModel)]="observaciones" name="observaciones" rows="2"></textarea>
+        </label>
+    </div>
+    <div class="acciones">
+        <button class="btn" (click)="prestar()">Registrar préstamo</button>
+    </div>
+    }
+    }
+
+    @if (Realizado.length > 0) {
+    <div class="exito">
+        <p>Préstamo #{{ Realizado[0].prestamo.idPrestamo }} registrado para
+            {{ Realizado[0].prestamo.usuario.nombres }} {{ Realizado[0].prestamo.usuario.apellidos }}.</p>
+        <ul>
+            @for (d of Realizado; track d.idDetalle) {
+            <li>{{ d.ejemplar.libro.titulo }} (ejemplar #{{ d.ejemplar.idEjemplar }}): devolver el
+                <strong>{{ d.fechaDevolucionPrevista }}</strong></li>
+            }
+        </ul>
+        <button class="btn small" (click)="limpiar()">Nuevo préstamo</button>
+    </div>
+    }
+</section>
+
+@if (Resumen && Resumen.usuario.estado == 'ACTIVO' && Resumen.multasPendientes == 0) {
+<h2>Ejemplares disponibles</h2>
+<div class="filtro">
+    <input [(ngModel)]="buscarLibro" name="buscarLibro" placeholder="Buscar por título">
+    <span class="vacio">Puede llevar {{ cupo() }} libro(s) más</span>
+</div>
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Libro</th>
+                <th>Ubicación</th>
+                <th>Condición</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (e of disponibles(); track e.idEjemplar) {
+            <tr>
+                <td>{{ e.idEjemplar }}</td>
+                <td>{{ e.libro?.titulo }}</td>
+                <td>{{ e.ubicacion?.sala }} - {{ e.ubicacion?.estanteria }}</td>
+                <td>{{ e.condicion }}</td>
+                <td><button class="btn small" (click)="agregar(e)">Agregar</button></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="5" class="vacio">No hay ejemplares disponibles</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}

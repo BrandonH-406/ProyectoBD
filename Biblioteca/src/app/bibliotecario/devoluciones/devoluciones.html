@@ -1,0 +1,94 @@
+<section class="panel">
+    <h2>Registrar devolución</h2>
+    <form class="filtro" (ngSubmit)="buscarUsuario()">
+        <input [(ngModel)]="codigo" name="codigo" placeholder="Carné o código de empleado">
+        <button type="submit" class="btn">Buscar</button>
+        <button type="button" class="btn sec" (click)="limpiar()">Limpiar</button>
+    </form>
+
+    @if (Usuario) {
+    <div class="tarjeta">
+        <div>
+            <strong>{{ Usuario.nombres }} {{ Usuario.apellidos }}</strong>
+            <span class="vacio">{{ Usuario.rol.nombre }} · {{ Usuario.estado }}</span>
+        </div>
+        <div>Multa por día de atraso: <strong>Q {{ Usuario.rol.multaPorDia }}</strong></div>
+    </div>
+    }
+
+    @if (Detalle) {
+    <h3>{{ Detalle.ejemplar.libro.titulo }} (ejemplar #{{ Detalle.ejemplar.idEjemplar }})</h3>
+    <p>Debía devolverse el <strong>{{ Detalle.fechaDevolucionPrevista }}</strong>.</p>
+    @if (diasAtraso(Detalle) > 0) {
+    <p class="alerta">Tiene {{ diasAtraso(Detalle) }} día(s) de atraso. Se generará una multa de
+        <strong>Q {{ multaEstimada().toFixed(2) }}</strong>.</p>
+    } @else {
+    <p class="exito">Se devuelve a tiempo, no se genera multa.</p>
+    }
+    <form (ngSubmit)="devolver()">
+        <div class="campos">
+            <label>Condición en que regresa
+                <select [(ngModel)]="condicion" name="condicion">
+                    <option value="NUEVO">Nuevo</option>
+                    <option value="BUENO">Bueno</option>
+                    <option value="REGULAR">Regular</option>
+                    <option value="DAÑADO">Dañado</option>
+                </select>
+            </label>
+            <label class="ancho">Observaciones
+                <textarea [(ngModel)]="observaciones" name="observaciones" rows="2"></textarea>
+            </label>
+        </div>
+        @if (condicion == 'DAÑADO') {
+        <p class="vacio">El ejemplar pasará a MANTENIMIENTO y no se podrá prestar.</p>
+        }
+        <div class="acciones">
+            <button type="submit" class="btn">Confirmar devolución</button>
+            <button type="button" class="btn sec" (click)="Detalle = null">Cancelar</button>
+        </div>
+    </form>
+    }
+
+    @if (Resultado) {
+    <p [class]="Resultado.multa > 0 ? 'alerta' : 'exito'">{{ Resultado.titulo }}: {{ Resultado.mensaje }}</p>
+    }
+</section>
+
+@if (Usuario) {
+<h2>Libros prestados</h2>
+<div class="tabla-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Préstamo</th>
+                <th>Libro</th>
+                <th>Fecha préstamo</th>
+                <th>Devolver el</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (d of Prestados; track d.idDetalle) {
+            <tr>
+                <td>#{{ d.prestamo.idPrestamo }}</td>
+                <td>{{ d.ejemplar.libro.titulo }} <span class="vacio">(ej. #{{ d.ejemplar.idEjemplar }})</span></td>
+                <td>{{ d.prestamo.fechaPrestamo }}</td>
+                <td>{{ d.fechaDevolucionPrevista }}</td>
+                <td>
+                    <span class="etiqueta" [class]="estadoDetalle(d)">{{ estadoDetalle(d) }}</span>
+                    @if (diasAtraso(d) > 0) {
+                    <span class="vacio">{{ diasAtraso(d) }} día(s)</span>
+                    }
+                </td>
+                <td><button class="btn small" (click)="seleccionar(d)">Devolver</button></td>
+            </tr>
+            } @empty {
+            <tr>
+                <td colspan="6" class="vacio">El usuario no tiene libros prestados</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
