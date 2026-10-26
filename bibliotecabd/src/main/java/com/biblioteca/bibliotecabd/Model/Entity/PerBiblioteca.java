@@ -22,7 +22,7 @@ public class PerBiblioteca {
 
     @Id
     @Column(name = "id_usuario")
-    private int idUsuario;
+    private Integer idUsuario;
 
     @OneToOne
     @MapsId
@@ -64,11 +64,11 @@ public class PerBiblioteca {
         this.fechaContratacion = fechaContratacion;
     }
 
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 

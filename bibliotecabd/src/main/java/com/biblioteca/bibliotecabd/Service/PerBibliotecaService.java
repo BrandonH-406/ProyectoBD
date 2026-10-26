@@ -8,28 +8,36 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.bibliotecabd.Model.Entity.PerBiblioteca;
 import com.biblioteca.bibliotecabd.Model.Repository.PerBibliotecaRepository;
 
-@Service 
+@Service
 public class PerBibliotecaService {
 
     private final PerBibliotecaRepository perBibliotecaRepository;
 
-    public PerBibliotecaService(PerBibliotecaRepository perBibliotecaRepository){
+    public PerBibliotecaService(PerBibliotecaRepository perBibliotecaRepository) {
         this.perBibliotecaRepository = perBibliotecaRepository;
     }
 
-    public List<PerBiblioteca> getAllPerBiblioteca(){
+    public List<PerBiblioteca> getAllPerBiblioteca() {
         return perBibliotecaRepository.findAll();
     }
 
-    public Optional<PerBiblioteca> findById(int id){
+    public Optional<PerBiblioteca> findById(Integer id) {
         return perBibliotecaRepository.findById(id);
     }
 
-    public PerBiblioteca save(PerBiblioteca perBiblioteca){
+    public PerBiblioteca save(PerBiblioteca perBiblioteca) {
         return perBibliotecaRepository.save(perBiblioteca);
     }
 
-    public void delete(PerBiblioteca perBiblioteca){
+    public void delete(PerBiblioteca perBiblioteca) {
         perBibliotecaRepository.delete(perBiblioteca);
     }
+
+    public Optional<PerBiblioteca> findByCodigoEmpleado(String codigoEmpleado) {
+        return perBibliotecaRepository.findByCodigoEmpleado(codigoEmpleado);
+    }
+
+    public List<PerBiblioteca> obtenerTodosLosEmpleados() {
+    return perBibliotecaRepository.findAllConUsuario();
+}
 }

@@ -21,7 +21,7 @@ public class RolService {
         return rolRepository.findAll();
     }
 
-    public Optional<Rol> findById(int id){
+    public Optional<Rol> findById(Integer id){
         return rolRepository.findById(id);
     }
 

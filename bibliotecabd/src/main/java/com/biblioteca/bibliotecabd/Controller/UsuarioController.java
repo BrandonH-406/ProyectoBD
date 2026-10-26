@@ -46,11 +46,13 @@ public class UsuarioController {
 
     @PostMapping("/createUsuario")
     public Usuario postMethodUsuario(@RequestBody Usuario entity) {
-        if (entity != null && usuarioService.findById(entity.getIdUsuario()).isPresent()) {
-            return null;
-        } else {
-            return usuarioService.save(entity);
+        if (entity != null && entity.getUsername() != null) {
+            // Validamos si el username ya está registrado en la base de datos
+            if (usuarioService.findByUsername(entity.getUsername()).isPresent()) {
+                return null; // O retornar ResponseEntity.badRequest()
+            }
         }
+        return usuarioService.save(entity);
     }
 
     @PutMapping("/update/{par_id}")
@@ -147,17 +149,17 @@ public class UsuarioController {
         }
     }
 
-    @PostMapping ("/login")
-    public Usuario loginAdmin(@RequestBody Usuario Admin){
+    @PostMapping("/login")
+    public Usuario loginAdmin(@RequestBody Usuario Admin) {
         Optional<Usuario> Administrador = usuarioService.findByUsername(Admin.getUsername());
 
-        if(Administrador.isEmpty()){
+        if (Administrador.isEmpty()) {
             return null;
         }
 
         Usuario user = Administrador.get();
 
-        if(!user.getPasswordHash().equals(Admin.getPasswordHash())){
+        if (!user.getPasswordHash().equals(Admin.getPasswordHash())) {
             return null;
         }
 

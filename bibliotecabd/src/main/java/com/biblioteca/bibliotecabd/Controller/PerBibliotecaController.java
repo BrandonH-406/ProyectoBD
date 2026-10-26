@@ -36,22 +36,29 @@ public class PerBibliotecaController {
     }
 
     @GetMapping("/perBibliotecaId/{id}")
-    public Optional<PerBiblioteca> getById(@PathVariable("id") int id) {
+    public Optional<PerBiblioteca> getById(@PathVariable("id") Integer id) {
         return perBibliotecaService.findById(id);
     }
 
     @PostMapping("/createPerBiblioteca")
     public PerBiblioteca postMethodPerBiblioteca(@RequestBody PerBiblioteca entity) {
-        if (entity != null && entity.getUsuario() != null
-                && perBibliotecaService.findById(entity.getUsuario().getIdUsuario()).isPresent()) {
+        // 1. Validar que la entidad y el código de empleado no vengan nulos ni vacíos
+        if (entity == null || entity.getCodigoEmpleado() == null || entity.getCodigoEmpleado().trim().isEmpty()) {
             return null;
-        } else {
-            return perBibliotecaService.save(entity);
         }
+
+        // 2. Verificar si el código de empleado ya está registrado en la base de datos
+        if (perBibliotecaService.findByCodigoEmpleado(entity.getCodigoEmpleado()).isPresent()) {
+            System.out.println("El código de empleado ya existe: " + entity.getCodigoEmpleado());
+            return null; // O retornar un ResponseEntity.status(HttpStatus.CONFLICT)
+        }
+
+        // 3. Si no existe, guardar el registro
+        return perBibliotecaService.save(entity);
     }
 
     @PutMapping("/update/{par_id}")
-    public PerBiblioteca updatePerBiblioteca(@PathVariable("par_id") int PerBibliotecaId,
+    public PerBiblioteca updatePerBiblioteca(@PathVariable("par_id") Integer PerBibliotecaId,
             @RequestBody PerBiblioteca updatePerBiblioteca) {
 
         Optional<PerBiblioteca> perBibliotecaOptional = perBibliotecaService.findById(PerBibliotecaId);
@@ -67,7 +74,8 @@ public class PerBibliotecaController {
     }
 
     @PatchMapping("/update_partial_perBiblioteca/{par_id}")
-    public PerBiblioteca partialUpdatePerBiblioteca(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public PerBiblioteca partialUpdatePerBiblioteca(@PathVariable Integer par_id,
+            @RequestBody Map<String, Object> updates) {
         Optional<PerBiblioteca> PerBibliotecaOptional = perBibliotecaService.findById(par_id);
 
         if (PerBibliotecaOptional.isPresent()) {
@@ -94,10 +102,15 @@ public class PerBibliotecaController {
     }
 
     @DeleteMapping("/deletePerBiblioteca/{id}")
-    public void DeletePerBiblioteca(@PathVariable("id") int id) {
+    public void DeletePerBiblioteca(@PathVariable("id") Integer id) {
         Optional<PerBiblioteca> PerBibliotecaOptional = perBibliotecaService.findById(id);
         if (PerBibliotecaOptional.isPresent()) {
             perBibliotecaService.delete(PerBibliotecaOptional.get());
         }
+    }
+
+    @GetMapping("/listarEmpleados")
+    public List<PerBiblioteca> listarEmpleados() {
+        return perBibliotecaService.obtenerTodosLosEmpleados();
     }
 }

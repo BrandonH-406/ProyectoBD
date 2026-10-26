@@ -24,28 +24,28 @@ public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_libro")
-    private int idLibro;
+    private Integer idLibro;
 
     @Column(name = "titulo")
     private String titulo;
 
     @Column(name = "anio_publicacion")
-    private int anioPublicacion;
+    private Integer anioPublicacion;
 
     @Column(name = "idioma")
     private String idioma;
 
     @Column(name = "edicion")
-    private int edicion;
+    private Integer edicion;
 
     @Column(name = "num_paginas")
-    private int numPaginas;
+    private Integer numPaginas;
 
     @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "estado")
-    private char estado;
+    private Character estado;
 
     @Column(name = "fecha_registro")
     private LocalDate fechaRegistrado;
@@ -68,7 +68,7 @@ public class Libro {
     public Libro(){
         
     }
-    public Libro(String titulo, int anioPublicacion, int edicion, int numPaginas, String descripcion, char estado,
+    public Libro(String titulo, Integer anioPublicacion, Integer edicion, Integer numPaginas, String descripcion, Character estado,
             LocalDate fechaRegistrado, Editorial editorial, Categoria categoria, String idioma,
             PerBiblioteca registradoPor) {
         this.titulo = titulo;
@@ -84,11 +84,11 @@ public class Libro {
         this.registradoPor = registradoPor;
     }
 
-    public int getIdLibro() {
+    public Integer getIdLibro() {
         return idLibro;
     }
 
-    public void setIdLibro(int idLibro) {
+    public void setIdLibro(Integer idLibro) {
         this.idLibro = idLibro;
     }
 
@@ -100,11 +100,11 @@ public class Libro {
         this.titulo = titulo;
     }
 
-    public int getAnioPublicacion() {
+    public Integer getAnioPublicacion() {
         return anioPublicacion;
     }
 
-    public void setAnioPublicacion(int anioPublicacion) {
+    public void setAnioPublicacion(Integer anioPublicacion) {
         this.anioPublicacion = anioPublicacion;
     }
 
@@ -116,19 +116,19 @@ public class Libro {
         this.idioma = idioma;
     }
 
-    public int getEdicion() {
+    public Integer getEdicion() {
         return edicion;
     }
 
-    public void setEdicion(int edicion) {
+    public void setEdicion(Integer edicion) {
         this.edicion = edicion;
     }
 
-    public int getNumPaginas() {
+    public Integer getNumPaginas() {
         return numPaginas;
     }
 
-    public void setNumPaginas(int numPaginas) {
+    public void setNumPaginas(Integer numPaginas) {
         this.numPaginas = numPaginas;
     }
 
@@ -140,11 +140,11 @@ public class Libro {
         this.descripcion = descripcion;
     }
 
-    public char getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 

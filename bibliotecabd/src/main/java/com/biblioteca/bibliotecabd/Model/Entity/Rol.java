@@ -14,7 +14,7 @@ public class Rol {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_rol")
-    private int idRol;
+    private Integer idRol;
 
     @Column(name = "nombre")
     private String nombre;
@@ -23,25 +23,25 @@ public class Rol {
     private String descripcion;
 
     @Column(name = "max_prestamos")
-    private int maxPrestamos;
+    private Integer maxPrestamos;
 
     @Column(name = "dias_prestamo")
-    private int diasPrestamo;
+    private Integer diasPrestamo;
 
     @Column(name = "max_renovaciones")
-    private int maxRenovaciones;
+    private Integer maxRenovaciones;
 
     @Column(name = "multa_por_dia")
-    private double multaPorDia;
+    private Double multaPorDia;
 
     @Column(name = "estado")
-    private char estado;
+    private Character estado;
 
     public Rol() {
     }
 
-    public Rol(String nombre, String descripcion, int maxPrestamos, int diasPrestamo, int maxRenovaciones,
-            double multaPorDia, char estado) {
+    public Rol(String nombre, String descripcion, Integer maxPrestamos, Integer diasPrestamo, Integer maxRenovaciones,
+            Double multaPorDia, Character estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.maxPrestamos = maxPrestamos;
@@ -51,11 +51,11 @@ public class Rol {
         this.estado = estado;
     }
 
-    public int getIdRol() {
+    public Integer getIdRol() {
         return idRol;
     }
 
-    public void setIdRol(int idRol) {
+    public void setIdRol(Integer idRol) {
         this.idRol = idRol;
     }
 
@@ -75,43 +75,43 @@ public class Rol {
         this.descripcion = descripcion;
     }
 
-    public int getMaxPrestamos() {
+    public Integer getMaxPrestamos() {
         return maxPrestamos;
     }
 
-    public void setMaxPrestamos(int maxPrestamos) {
+    public void setMaxPrestamos(Integer maxPrestamos) {
         this.maxPrestamos = maxPrestamos;
     }
 
-    public int getDiasPrestamo() {
+    public Integer getDiasPrestamo() {
         return diasPrestamo;
     }
 
-    public void setDiasPrestamo(int diasPrestamo) {
+    public void setDiasPrestamo(Integer diasPrestamo) {
         this.diasPrestamo = diasPrestamo;
     }
 
-    public int getMaxRenovaciones() {
+    public Integer getMaxRenovaciones() {
         return maxRenovaciones;
     }
 
-    public void setMaxRenovaciones(int maxRenovaciones) {
+    public void setMaxRenovaciones(Integer maxRenovaciones) {
         this.maxRenovaciones = maxRenovaciones;
     }
 
-    public double getMultaPorDia() {
+    public Double getMultaPorDia() {
         return multaPorDia;
     }
 
-    public void setMultaPorDia(double multaPorDia) {
+    public void setMultaPorDia(Double multaPorDia) {
         this.multaPorDia = multaPorDia;
     }
 
-    public char getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 
