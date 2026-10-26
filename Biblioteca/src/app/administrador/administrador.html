@@ -15,78 +15,38 @@
 <body>
     <div class="strip"></div>
     <header class="head">
-        <a class="logo" href="index.html" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+        <a class="logo" routerLink="/administrador" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
                 class="word">MI LIBRERÍA</span></a>
         <a class="phone" href="https://wa.me/50200000000"></a>
     </header>
     <nav class="nav" aria-label="Principal">
-        <a href="index.html" class="active">Estaditicas</a><a href="ubicaciones.html">Libros</a><a
-            href="club-de-lectores.html">Bibliotecarios</a><a href="promociones.html">Usuarios</a><a
-            href="eventos.html">Historial de Prestamos</a><a href="cafe.html">Auditoria</a>
+        <a routerLink="/administrador" class="active">Estaditicas</a><a routerLink="/historial-libros">Libros</a><a
+            routerLink="/gestion-empleados">Bibliotecarios</a><a>Usuarios</a><a routerLink="/historial-prestamos"
+            >Historial de Prestamos</a><a routerLink="/auditoria">Auditoria</a>
     </nav>
 
     <main class="wrap">
-        <h1 class="sr">Tienda en línea</h1>
-        <div class="grid">
-            <a class="cat" href="categoria.html?c=De%20nuestras%20redes%20sociales"><span class="ico">🏛</span>
-                <h3>De nuestras redes sociales</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Editorial%20destacada"><span class="ico">✒️</span>
-                <h3>Editorial destacada</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Libros"><span class="ico">📖</span>
-                <h3>Libros</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Agendas%2C%20calendarios%2C%20libretas%20y%20papeler%C3%ADa"><span
-                    class="ico">📓</span>
-                <h3>Agendas, calendarios, libretas y papelería</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Inciensos"><span class="ico">🕯️</span>
-                <h3>Inciensos</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Aromaterapia"><span class="ico">🧴</span>
-                <h3>Aromaterapia</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Long%20Play"><span class="ico">💿</span>
-                <h3>Long Play</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Bienestar"><span class="ico">🧘</span>
-                <h3>Bienestar</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Regalos%20y%20decoraci%C3%B3n"><span class="ico">🎁</span>
-                <h3>Regalos y decoración</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Juegos%20de%20mesa%20y%20rompecabezas"><span class="ico">🧩</span>
-                <h3>Juegos de mesa y rompecabezas</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Gift%20cards"><span class="ico">💳</span>
-                <h3>Gift cards</h3>
-            </a>
-            <a class="cat" href="categoria.html?c=Ofertas"><span class="ico">⭐</span>
-                <h3>Ofertas</h3>
-            </a>
+        <h1>Dashboard</h1>
+        <p class="lead">Información del sistema
+        </p>
+        <div class="cards">
+            <article class="card">
+                <h3>Empleados Totales</h3>
+                <p>6a Avenida 10-20, Zona 1</p>
+                <p class="muted">Lun a sáb 10:00 - 19:00</p>
+            </article>
+            <article class="card">
+                <h3>Sucursal Zona 10</h3>
+                <p>Calle 5-30, Zona 10</p>
+                <p class="muted">Lun a dom 10:00 - 20:00</p>
+            </article>
+            <article class="card">
+                <h3>Sucursal Oakland</h3>
+                <p>Diagonal 6 12-42, Zona 10</p>
+                <p class="muted">Lun a sáb 09:00 - 18:00</p>
+            </article>
         </div>
     </main>
-
-    <footer class="footer">
-        <div class="cols">
-            <div>
-                <h4>Accesos</h4><a href="index.html">Tienda en línea</a><a href="club-de-lectores.html">Club de
-                    lectores</a><a href="promociones.html">Promociones</a><a href="eventos.html">Eventos</a>
-            </div>
-            <div>
-                <h4>Servicio al cliente</h4><a href="carrito.html">Mi carrito</a><a
-                    href="ubicaciones.html">Ubicaciones</a><a href="#">Condiciones de envío</a><a href="#">Política de
-                    cambios</a>
-            </div>
-            <div>
-                <h4>Contáctanos</h4><a href="https://wa.me/50200000000">WhatsApp</a><a href="#">Instagram</a><a
-                    href="#">Facebook</a>
-            </div>
-        </div>
-        <p class="copy">© 2026 Mi Librería</p>
-    </footer>
-    <script src="script.js"></script>
 </body>
 
 </html>

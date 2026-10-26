@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de bibliotecarios - Mi Librería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="historial-libros.css">
+</head>
+
+<body>
+    <div class="strip"></div>
+    <header class="head">
+        <a class="logo" routerLink="/administrador" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+                class="word">MI LIBRERÍA</span></a>
+        <a class="phone" href="https://wa.me/50200000000"></a>
+    </header>
+    <nav class="nav" aria-label="Principal">
+        <a routerLink="/administrador">Estadísticas</a><a routerLink="/historial-libros">Libros</a><a
+            routerLink="/gestion-empleados" class="active">Bibliotecarios</a><a>Usuarios</a><a
+            routerLink="/historial-prestamos">Historial de Préstamos</a><a routerLink="/auditoria">Auditoría</a>
+    </nav>
+
+    <!-- Un solo <main> con las dos tarjetas: formulario y listado -->
+    <main class="wrap gestion">
+
+        <!-- ===== FORMULARIO ===== -->
+        <form id="form-registro" class="tarjeta" novalidate>
+            <h1>Crear Libro</h1>
+
+            <!-- DATOS PERSONALES -->
+            <section class="seccion">
+                <h2>Datos del libro</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="titulo">Titulo</label>
+                        <input [(ngModel)]="Libro.titulo" type="text" id="titulo" name="titulo" placeholder=""
+                            maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="Categoria">Año de publicacion</label>
+                        <input [(ngModel)]="Libro.anioPublicacion" type="text" id="aniopublicacion"
+                            name="aniopublicacion" placeholder="" maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="edicion">Edición</label>
+                        <input [(ngModel)]="Libro.edicion" type="text" id="edicion" name="edicion" placeholder=""
+                            maxlength="13" inputmode="numeric" required>
+                    </div>
+                    <div class="campo">
+                        <label for="idioma">Idioma</label>
+                        <input [(ngModel)]="Libro.idioma" type="text" id="idioma" name="idioma">
+                    </div>
+                    <div class="campo">
+                        <label for="numpaginas">Numero de Paginas</label>
+                        <input [(ngModel)]="Libro.numPaginas" type="number" id="numpaginas" name="numpaginas"
+                            placeholder="" maxlength="150" required>
+                    </div>
+                    <div class="campo">
+                        <label for="estado">Estado</label>
+                        <input [(ngModel)]="Libro.estado" type="text" id="estado" name="estado" placeholder=""
+                            maxlength="100">
+                    </div>
+                    <div class="campo">
+                        <label for="categoria">Categoría</label>
+                        <select [(ngModel)]="Libro.categoria" id="categoria" name="categoria" required>
+                            <option value="" disabled selected>Seleccione una categoría</option>
+                            <option *ngFor="let cat of ListaCategorias" [ngValue]="cat">
+                                {{ cat.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="editorial">Editorial</label>
+                        <select [(ngModel)]="Libro.editorial" id="editorial" name="editorial" required>
+                            <option value="" disabled selected>Seleccione una editorial</option>
+                            <option *ngFor="let ed of ListaEditorial" [ngValue]="ed">
+                                {{ ed.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="campo campo-ancho">
+                    <label for="descripcion">Descripcion</label>
+                    <input [(ngModel)]="Libro.descripcion" type="text" id="description" name="descripcion"
+                        placeholder="" maxlength="250">
+                </div>
+            </section>
+
+
+            <p id="mensaje-error" class="mensaje-error" role="alert" hidden></p>
+
+            <button (click)="CrearLibro()" type="button" class="boton">Registrar</button>
+        </form>
+
+        <!-- ===== LISTADO ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Libros</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>idLibro</th>
+                                <th>Titulo</th>
+                                <th>Editorial</th>
+                                <th>Categoria</th>
+                                <th>Año Publicacion</th>
+                                <th>Idioma</th>
+                                <th>Numero de paginas</th>
+                                <th>Descripcion</th>
+                                <th>Edicion</th>
+                                <th>Estado</th>
+                                <th>Fecha Registro</th>
+                                <th>registrado por</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let libro of listaLibros">
+                                <td>{{ libro.idLibro }}</td>
+                                <td>{{ libro.titulo }}</td>
+                                <td>{{ libro.editorial.nombre }}</td>
+                                <td>{{ libro.categoria.nombre }}</td>
+                                <td>{{ libro.anioPublicacion }}</td>
+                                <td>{{ libro.idioma }}</td>
+                                <td>{{ libro.numPaginas }}</td>
+                                <td>{{ libro.descripcion }}</td>
+                                <td>{{ libro.edicion }}</td>
+                                <td>{{ libro.estado }}</td>
+                                <td>{{ libro.fechaRegistro | date: 'dd/MM/yyyy' }}</td>
+                                <td>{{ libro.registradoPor.codigoEmpleado}}</td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="listaLibros.length === 0">
+                                <td colspan="6">No hay libros registrados.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</body>
+
+</html>
