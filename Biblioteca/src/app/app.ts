@@ -9,4 +9,18 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('Biblioteca');
+
+    Administradorexiste: boolean = false;
+  
+  constructor(){
+
+    let usuario:any = localStorage.getItem("administrador");
+    this.Administradorexiste =usuario?true:false;
+
+
+  }
+
+  logout(){
+    localStorage.clear();
+  }
 }
