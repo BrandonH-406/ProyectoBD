@@ -38,27 +38,29 @@ public class LibroController {
         return libroService.getAllLibro();
     }
 
-    @GetMapping ("/LibrosTitulo/{titulo}")
-    public List<Libro> getLibroNombre(@PathVariable ("titulo") String titulo){
-        return  libroService.findByTitulo(titulo);
+    @GetMapping("/LibrosTitulo/{titulo}")
+    public List<Libro> getLibroNombre(@PathVariable("titulo") String titulo) {
+        return libroService.findByTitulo(titulo);
     }
 
     @GetMapping("/libroId/{id}")
-    public Optional<Libro> getById(@PathVariable("id") int id) {
+    public Optional<Libro> getById(@PathVariable("id") Integer id) {
         return libroService.findById(id);
     }
 
     @PostMapping("/createLibro")
     public Libro postMethodLibro(@RequestBody Libro entity) {
-        if (entity != null && libroService.findById(entity.getIdLibro()).isPresent()) {
-            return null;
+        // Revisa si ya existe un libro grabado con el mismo título
+        if (entity != null && entity.getTitulo() != null && libroService.portitulo(entity.getTitulo()).isPresent()) {
+            // Ya existe un libro con ese título
+            return null; // O lanzar una excepción / devolver un ResponseEntity.badRequest()
         } else {
             return libroService.save(entity);
         }
     }
 
     @PutMapping("/update/{par_id}")
-    public Libro updateLibro(@PathVariable("par_id") int libroId, @RequestBody Libro updateLibro) {
+    public Libro updateLibro(@PathVariable("par_id") Integer libroId, @RequestBody Libro updateLibro) {
 
         Optional<Libro> libroOptional = libroService.findById(libroId);
         if (libroOptional.isPresent()) {
@@ -81,7 +83,7 @@ public class LibroController {
     }
 
     @PatchMapping("/update_partial_libro/{par_id}")
-    public Libro partialUpdateLibro(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Libro partialUpdateLibro(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Libro> LibroOptional = libroService.findById(par_id);
 
         if (LibroOptional.isPresent()) {
@@ -130,15 +132,15 @@ public class LibroController {
     }
 
     @DeleteMapping("/deleteLibro/{id}")
-    public void DeleteLibro(@PathVariable("id") int id) {
+    public void DeleteLibro(@PathVariable("id") Integer id) {
         Optional<Libro> libroOptional = libroService.findById(id);
         if (libroOptional.isPresent()) {
             libroService.delete(libroOptional.get());
         }
     }
 
-    @GetMapping ("/LibrosCategoria/{categoria}")
-    public List<Libro> LibrosPorCategoria(@PathVariable ("categoria") String categoria){
+    @GetMapping("/LibrosCategoria/{categoria}")
+    public List<Libro> LibrosPorCategoria(@PathVariable("categoria") String categoria) {
         return libroService.LibrosPorCategia(categoria);
     }
 

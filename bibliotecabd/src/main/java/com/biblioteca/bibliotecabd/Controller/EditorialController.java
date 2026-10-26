@@ -35,7 +35,7 @@ public class EditorialController {
     }
 
     @GetMapping("/editorialId/{id}")
-    public Optional<Editorial> getById(@PathVariable("id") int id) {
+    public Optional<Editorial> getById(@PathVariable("id") Integer id) {
         return editorialService.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class EditorialController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Editorial updateEditorial(@PathVariable("par_id") int editorialId, @RequestBody Editorial updatededitorial) {
+    public Editorial updateEditorial(@PathVariable("par_id") Integer editorialId, @RequestBody Editorial updatededitorial) {
 
         Optional<Editorial> editorialOptional = editorialService.findById(editorialId);
         if (editorialOptional.isPresent()) {
@@ -65,7 +65,7 @@ public class EditorialController {
     }
 
     @PatchMapping("/update_partial_editorial/{par_id}")
-    public Editorial partialUpdateEditoral(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Editorial partialUpdateEditoral(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Editorial> EditorialOptional = editorialService.findById(par_id);
 
         if (EditorialOptional.isPresent()) {
@@ -96,7 +96,7 @@ public class EditorialController {
 
 
     @DeleteMapping ("/deleteEditorial/{id}")
-    public void DeleteEditorial(@PathVariable ("id") int id){
+    public void DeleteEditorial(@PathVariable ("id") Integer id){
         Optional<Editorial> editorOptional = editorialService.findById(id);
         if(editorOptional.isPresent()){
             editorialService.delete(editorOptional.get());

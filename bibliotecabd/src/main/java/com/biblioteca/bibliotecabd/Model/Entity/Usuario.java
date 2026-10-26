@@ -98,7 +98,7 @@ public class Usuario {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 

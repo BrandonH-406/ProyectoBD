@@ -21,7 +21,7 @@ public class Editorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_editorial")
-    private int idEditorial;
+    private Integer idEditorial;
 
     @Column(name = "nombre")
     private String nombre;
@@ -33,13 +33,13 @@ public class Editorial {
     private String sitioWeb;
 
     @Column(name = "estado")
-    private char estado;
+    private Character estado;
 
-    public int getIdEditorial() {
+    public Integer getIdEditorial() {
         return idEditorial;
     }
 
-    public void setIdEditorial(int idEditorial) {
+    public void setIdEditorial(Integer idEditorial) {
         this.idEditorial = idEditorial;
     }
 
@@ -67,11 +67,11 @@ public class Editorial {
         this.sitioWeb = sitioWeb;
     }
 
-    public char getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 
@@ -81,7 +81,7 @@ public class Editorial {
     public Editorial(){
 
     }
-    public Editorial(String nombre, String pais, String sitioWeb, char estado) {
+    public Editorial(String nombre, String pais, String sitioWeb, Character estado) {
         this.nombre = nombre;
         this.pais = pais;
         this.sitioWeb = sitioWeb;

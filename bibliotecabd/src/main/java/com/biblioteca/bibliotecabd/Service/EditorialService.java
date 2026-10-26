@@ -21,7 +21,7 @@ public class EditorialService {
         return (List<Editorial>) editorialRepository.findAll();
     }
 
-    public Optional<Editorial> findById(int id) {
+    public Optional<Editorial> findById(Integer id) {
         return editorialRepository.findById(id);
     }
 

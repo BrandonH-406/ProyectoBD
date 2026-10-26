@@ -21,7 +21,7 @@ public class LibroService {
         return (List<Libro>) libroRepository.findAll();
     }
 
-    public Optional<Libro> findById(int id) {
+    public Optional<Libro> findById(Integer id) {
         return libroRepository.findById(id);
     }
 
@@ -39,6 +39,10 @@ public class LibroService {
 
     public List<Libro> LibrosPorCategia(String categoria){
         return libroRepository.findTitulosPorCategoria(categoria);
+    }
+
+    public Optional<Libro> portitulo(String titulo){
+        return  libroRepository.findByTitulo(titulo);
     }
 
 }

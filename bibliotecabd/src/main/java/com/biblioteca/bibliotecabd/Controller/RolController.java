@@ -35,7 +35,7 @@ public class RolController {
     }
 
     @GetMapping("/rolId/{id}")
-    public Optional<Rol> getById(@PathVariable("id") int id) {
+    public Optional<Rol> getById(@PathVariable("id") Integer id) {
         return rolService.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class RolController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Rol updateRol(@PathVariable("par_id") int RolId, @RequestBody Rol updateRol) {
+    public Rol updateRol(@PathVariable("par_id") Integer RolId, @RequestBody Rol updateRol) {
 
         Optional<Rol> rolOptional = rolService.findById(RolId);
         if (rolOptional.isPresent()) {
@@ -68,7 +68,7 @@ public class RolController {
     }
 
     @PatchMapping("/update_partial_rol/{par_id}")
-    public Rol partialUpdateRol(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Rol partialUpdateRol(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Rol> RolOptional = rolService.findById(par_id);
 
         if (RolOptional.isPresent()) {
@@ -107,7 +107,7 @@ public class RolController {
     }
 
     @DeleteMapping("/deleteRol/{id}")
-    public void DeleteRol(@PathVariable("id") int id) {
+    public void DeleteRol(@PathVariable("id") Integer id) {
         Optional<Rol> RolOptional = rolService.findById(id);
         if (RolOptional.isPresent()) {
             rolService.delete(RolOptional.get());
