@@ -40,7 +40,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarioId/{id}")
-    public Optional<Usuario> getById(@PathVariable("id") int id) {
+    public Optional<Usuario> getById(@PathVariable("id") Integer id) {
         return usuarioService.findById(id);
     }
 
@@ -54,7 +54,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Usuario updateUsuario(@PathVariable("par_id") int UsuarioId, @RequestBody Usuario updateUsuario) {
+    public Usuario updateUsuario(@PathVariable("par_id") Integer UsuarioId, @RequestBody Usuario updateUsuario) {
 
         Optional<Usuario> usuarioOptional = usuarioService.findById(UsuarioId);
         if (usuarioOptional.isPresent()) {
@@ -80,7 +80,7 @@ public class UsuarioController {
     }
 
     @PatchMapping("/update_partial_usuario/{par_id}")
-    public Usuario partialUpdateUsuario(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Usuario partialUpdateUsuario(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Usuario> UsuarioOptional = usuarioService.findById(par_id);
 
         if (UsuarioOptional.isPresent()) {
@@ -145,5 +145,22 @@ public class UsuarioController {
         if (UsuarioOptional.isPresent()) {
             usuarioService.delete(UsuarioOptional.get());
         }
+    }
+
+    @PostMapping ("/login")
+    public Usuario loginAdmin(@RequestBody Usuario Admin){
+        Optional<Usuario> Administrador = usuarioService.findByUsername(Admin.getUsername());
+
+        if(Administrador.isEmpty()){
+            return null;
+        }
+
+        Usuario user = Administrador.get();
+
+        if(!user.getPasswordHash().equals(Admin.getPasswordHash())){
+            return null;
+        }
+
+        return user;
     }
 }
