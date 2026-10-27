@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de bibliotecarios - Mi Librería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="auditoria.css">
+</head>
+
+<body>
+    <div class="strip"></div>
+    <header class="head">
+        <a class="logo" routerLink="/administrador" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+                class="word">MI LIBRERÍA</span></a>
+        <a class="phone" href="#" (click)="logout()">Cerrar sesión</a>
+    </header>
+    <nav class="nav" aria-label="Principal">
+        <a routerLink="/administrador">Mi perfil
+        </a><a routerLink="/historial-libros">Libros</a><a routerLink="/gestion-empleados"
+            class="active">Bibliotecarios</a><a routerLink="/gestion-usuarios">Usuarios</a><a
+            routerLink="/historial-prestamos">Historial de Préstamos</a><a routerLink="/auditoria">Auditoría</a>
+    </nav>
+
+    <!-- Un solo <main> con las dos tarjetas: formulario y listado -->
+    <main class="wrap gestion">
+
+        <!-- ===== LISTADO ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Bitacora</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>idBitacora</th>
+                                <th>Tabla afectada</th>
+                                <th>Operacion</th>
+                                <th>idRegistro</th>
+                                <th>Año Publicacion</th>
+                                <th>Datos anteriores</th>
+                                <th>Datos Nuevos</th>
+                                <th>Usuario BD</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let bitacora of ListaBitacora">
+                                <td>{{ bitacora.idBitacora }}</td>
+                                <td>{{ bitacora.tablaAfectada }}</td>
+                                <td>{{ bitacora.operacion }}</td>
+                                <td>{{ bitacora.idRegistro }}</td>
+                                <td>{{ bitacora.datosAnteriores }}</td>
+                                <td>{{ bitacora.datosNuevos }}</td>
+                                <td>{{ bitacora.usuarioBd }}</td>
+                                <td>{{ bitacora.fecha | date: 'dd/MM/yyyy' }}</td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="ListaBitacora.length === 0">
+                                <td colspan="6">No hay registrados disponibles.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ===== LISTADO ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Bitacora de Acceso al sistema</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>id acceso</th>
+                                <th>Usuario</th>
+                                <th>Username intentado</th>
+                                <th>Resultado</th>
+                                <th>Direccion IP</th>
+                                <th>Detalle</th>
+                                <th>fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let bitacoraA of ListaBitacoraAcceso">
+                                <td>{{ bitacoraA.idAcceso }}</td>
+                                <td>{{ bitacoraA.usuario?.username }}</td>
+                                <td>{{ bitacoraA.usernameIntentado }}</td>
+                                <td>{{ bitacoraA.resultado }}</td>
+                                <td>{{ bitacoraA.direccionIp }}</td>
+                                <td>{{ bitacoraA.detalle }}</td>                                
+                                <td>{{ bitacoraA.fecha }}</td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="ListaBitacoraAcceso.length === 0">
+                                <td colspan="6">No hay registrados disponibles.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</body>
+
+</html>

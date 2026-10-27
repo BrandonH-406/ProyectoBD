@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de usuarios - Mi Librería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="gestion-usuarios.css">
+</head>
+
+<body>
+    <div class="strip"></div>
+    <header class="head">
+        <a class="logo" routerLink="/administrador" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+                class="word">MI LIBRERÍA</span></a>
+        <a class="phone" href="#" (click)="logout()">Cerrar sesión</a>
+    </header>
+    <nav class="nav" aria-label="Principal">
+        <a routerLink="/administrador">Mi perfil</a><a routerLink="/historial-libros">Libros</a><a
+            routerLink="/gestion-empleados">Bibliotecarios</a><a routerLink="/gestion-usuarios"
+            class="active">Usuarios</a><a routerLink="/historial-prestamos">Historial de Préstamos</a><a
+            routerLink="/auditoria">Auditoría</a>
+    </nav>
+
+    <main class="wrap gestion">
+
+        <!-- =====================================================
+             ESTUDIANTES
+             ===================================================== -->
+
+        <!-- ===== FORMULARIO ESTUDIANTE ===== -->
+        <form id="form-estudiante" class="tarjeta" novalidate>
+            <h1>{{ UsuarioEst.idUsuario ? 'Editar estudiante' : 'Crear cuenta de estudiante' }}</h1>
+
+            <!-- DATOS PERSONALES -->
+            <section class="seccion">
+                <h2>Datos personales</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="est-nombres">Nombres</label>
+                        <input [(ngModel)]="UsuarioEst.nombres" type="text" id="est-nombres" name="nombres"
+                            placeholder="Ana María" maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="est-apellidos">Apellidos</label>
+                        <input [(ngModel)]="UsuarioEst.apellidos" type="text" id="est-apellidos" name="apellidos"
+                            placeholder="López Ruiz" maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="est-dpi">DPI</label>
+                        <input [(ngModel)]="UsuarioEst.dpi" type="text" id="est-dpi" name="dpi"
+                            placeholder="2000000000404" maxlength="13" inputmode="numeric" pattern="[0-9]{13}"
+                            required>
+                    </div>
+                    <div class="campo">
+                        <label for="est-fecha-nacimiento">Fecha de nacimiento</label>
+                        <input [(ngModel)]="UsuarioEst.fechaNacimiento" type="text" id="est-fecha-nacimiento"
+                            name="fecha_nacimiento" placeholder="DD/MM/AAAA">
+                    </div>
+                    <div class="campo">
+                        <label for="est-email">Correo</label>
+                        <input [(ngModel)]="UsuarioEst.email" type="email" id="est-email" name="email"
+                            placeholder="name@univ.edu" maxlength="150" required>
+                    </div>
+                    <div class="campo">
+                        <label for="est-telefono">Teléfono</label>
+                        <input [(ngModel)]="UsuarioEst.telefono" type="tel" id="est-telefono" name="telefono"
+                            placeholder="50244444444" maxlength="15">
+                    </div>
+                </div>
+                <div class="campo campo-ancho">
+                    <label for="est-direccion">Dirección</label>
+                    <input [(ngModel)]="UsuarioEst.direccion" type="text" id="est-direccion" name="direccion"
+                        placeholder="Zona 18, Ciudad de Guatemala" maxlength="250">
+                </div>
+            </section>
+
+            <!-- ACCESO -->
+            <section class="seccion">
+                <h2>Acceso</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="est-username">Nombre de usuario</label>
+                        <input [(ngModel)]="UsuarioEst.username" type="text" id="est-username" name="username"
+                            placeholder="alopez" maxlength="50" autocomplete="username">
+                    </div>
+                    <div class="campo">
+                        <label for="est-password">Contraseña</label>
+                        <input [(ngModel)]="UsuarioEst.passwordHash" type="password" id="est-password"
+                            name="password" autocomplete="new-password">
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATOS DE ESTUDIANTE -->
+            <section class="seccion">
+                <h2>Datos de estudiante</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="est-carne">Carné</label>
+                        <input [(ngModel)]="Estudiante.carne" type="text" id="est-carne" name="carne"
+                            placeholder="202400001" maxlength="20">
+                    </div>
+                    <div class="campo">
+                        <label for="est-carrera">Carrera</label>
+                        <select [(ngModel)]="idCarrera" id="est-carrera" name="id_carrera">
+                            <option [ngValue]="null" disabled>Selecciona una carrera</option>
+                            <option *ngFor="let c of listaCarreras" [ngValue]="c.idCarrera">
+                                {{ c.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="est-anio">Año de ingreso</label>
+                        <input [(ngModel)]="Estudiante.anioIngreso" type="number" id="est-anio" name="anio_ingreso"
+                            placeholder="2024" min="1950" max="2100">
+                    </div>
+                    <div class="campo">
+                        <label for="est-semestre">Semestre actual</label>
+                        <input [(ngModel)]="Estudiante.semestreActual" type="number" id="est-semestre"
+                            name="semestre_actual" placeholder="1" min="1" max="20">
+                    </div>
+                </div>
+            </section>
+
+            @if (errorEst) {
+            <p class="mensaje-error" role="alert">{{ errorEst }}</p>
+            }
+
+            <button (click)="guardarEstudiante()" type="button" class="boton">
+                {{ UsuarioEst.idUsuario ? 'Guardar cambios' : 'Registrar' }}
+            </button>
+            @if (UsuarioEst.idUsuario) {
+            <button type="button" class="btn sec" (click)="cancelarEstudiante()">Cancelar</button>
+            }
+        </form>
+
+        <!-- ===== LISTADO ESTUDIANTES ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Estudiantes</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>Carné</th>
+                                <th>Nombre Completo</th>
+                                <th>DPI</th>
+                                <th>Correo</th>
+                                <th>Carrera</th>
+                                <th>Año Ingreso</th>
+                                <th>Semestre</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let est of listaEstudiantes">
+                                <td data-label="Carné">
+                                    {{ est.carne }}
+                                </td>
+
+                                <td data-label="Nombre Completo">
+                                    {{ est.usuario?.nombres }}
+                                    {{ est.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="DPI">
+                                    {{ est.usuario?.dpi }}
+                                </td>
+
+                                <td data-label="Correo">
+                                    {{ est.usuario?.email }}
+                                </td>
+
+                                <td data-label="Carrera">
+                                    {{ est.carrera?.nombre }}
+                                </td>
+
+                                <td data-label="Año Ingreso">
+                                    {{ est.anioIngreso }}
+                                </td>
+
+                                <td data-label="Semestre">
+                                    {{ est.semestreActual }}
+                                </td>
+
+                                <td data-label="Estado">{{ est.usuario?.estado }}</td>
+
+                                <td data-label="Acciones">
+                                    <button type="button" class="btn small" (click)="editarEstudiante(est)">
+                                        Editar
+                                    </button>
+
+                                    <button type="button" class="btn btn-sm"
+                                        [ngClass]="esActivo(est.usuario) ? 'btn-danger' : 'btn-success'"
+                                        (click)="cambiarEstado(est)">
+                                        {{ esActivo(est.usuario) ? 'Desactivar' : 'Activar' }}
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="listaEstudiantes.length === 0">
+                                <td colspan="9">
+                                    No hay estudiantes registrados.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- =====================================================
+             PROFESORES
+             ===================================================== -->
+
+        <!-- ===== FORMULARIO PROFESOR ===== -->
+        <form id="form-profesor" class="tarjeta" novalidate>
+            <h1>{{ UsuarioProf.idUsuario ? 'Editar profesor' : 'Crear cuenta de profesor' }}</h1>
+
+            <!-- DATOS PERSONALES -->
+            <section class="seccion">
+                <h2>Datos personales</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="prof-nombres">Nombres</label>
+                        <input [(ngModel)]="UsuarioProf.nombres" type="text" id="prof-nombres" name="nombres"
+                            placeholder="Carlos Eduardo" maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="prof-apellidos">Apellidos</label>
+                        <input [(ngModel)]="UsuarioProf.apellidos" type="text" id="prof-apellidos" name="apellidos"
+                            placeholder="Pérez Morales" maxlength="100" required>
+                    </div>
+                    <div class="campo">
+                        <label for="prof-dpi">DPI</label>
+                        <input [(ngModel)]="UsuarioProf.dpi" type="text" id="prof-dpi" name="dpi"
+                            placeholder="2000000000404" maxlength="13" inputmode="numeric" pattern="[0-9]{13}"
+                            required>
+                    </div>
+                    <div class="campo">
+                        <label for="prof-fecha-nacimiento">Fecha de nacimiento</label>
+                        <input [(ngModel)]="UsuarioProf.fechaNacimiento" type="text" id="prof-fecha-nacimiento"
+                            name="fecha_nacimiento" placeholder="DD/MM/AAAA">
+                    </div>
+                    <div class="campo">
+                        <label for="prof-email">Correo</label>
+                        <input [(ngModel)]="UsuarioProf.email" type="email" id="prof-email" name="email"
+                            placeholder="name@univ.edu" maxlength="150" required>
+                    </div>
+                    <div class="campo">
+                        <label for="prof-telefono">Teléfono</label>
+                        <input [(ngModel)]="UsuarioProf.telefono" type="tel" id="prof-telefono" name="telefono"
+                            placeholder="50244444444" maxlength="15">
+                    </div>
+                </div>
+                <div class="campo campo-ancho">
+                    <label for="prof-direccion">Dirección</label>
+                    <input [(ngModel)]="UsuarioProf.direccion" type="text" id="prof-direccion" name="direccion"
+                        placeholder="Zona 18, Ciudad de Guatemala" maxlength="250">
+                </div>
+            </section>
+
+            <!-- ACCESO -->
+            <section class="seccion">
+                <h2>Acceso</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="prof-username">Nombre de usuario</label>
+                        <input [(ngModel)]="UsuarioProf.username" type="text" id="prof-username" name="username"
+                            placeholder="cperez" maxlength="50" autocomplete="username">
+                    </div>
+                    <div class="campo">
+                        <label for="prof-password">Contraseña</label>
+                        <input [(ngModel)]="UsuarioProf.passwordHash" type="password" id="prof-password"
+                            name="password" autocomplete="new-password">
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATOS DE PROFESOR -->
+            <section class="seccion">
+                <h2>Datos de profesor</h2>
+                <div class="grid">
+                    <div class="campo">
+                        <label for="prof-codigo">Código de empleado</label>
+                        <input [(ngModel)]="Profesor.codigoEmpleado" type="text" id="prof-codigo"
+                            name="codigo_empleado" placeholder="PROF-0001" maxlength="20">
+                    </div>
+                    <div class="campo">
+                        <label for="prof-facultad">Facultad</label>
+                        <select [(ngModel)]="idFacultad" id="prof-facultad" name="id_facultad">
+                            <option [ngValue]="null" disabled>Selecciona una facultad</option>
+                            <option *ngFor="let f of listaFacultades" [ngValue]="f.idFacultad">
+                                {{ f.nombre }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="prof-titulo">Título académico</label>
+                        <input [(ngModel)]="Profesor.tituloAcademico" type="text" id="prof-titulo"
+                            name="titulo_academico" placeholder="Ingeniero" maxlength="100">
+                    </div>
+                </div>
+            </section>
+
+            @if (errorProf) {
+            <p class="mensaje-error" role="alert">{{ errorProf }}</p>
+            }
+
+            <button (click)="guardarProfesor()" type="button" class="boton">
+                {{ UsuarioProf.idUsuario ? 'Guardar cambios' : 'Registrar' }}
+            </button>
+            @if (UsuarioProf.idUsuario) {
+            <button type="button" class="btn sec" (click)="cancelarProfesor()">Cancelar</button>
+            }
+        </form>
+
+        <!-- ===== LISTADO PROFESORES ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Profesores</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre Completo</th>
+                                <th>DPI</th>
+                                <th>Correo</th>
+                                <th>Facultad</th>
+                                <th>Título Académico</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let prof of listaProfesores">
+                                <td data-label="Código">
+                                    {{ prof.codigoEmpleado }}
+                                </td>
+
+                                <td data-label="Nombre Completo">
+                                    {{ prof.usuario?.nombres }}
+                                    {{ prof.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="DPI">
+                                    {{ prof.usuario?.dpi }}
+                                </td>
+
+                                <td data-label="Correo">
+                                    {{ prof.usuario?.email }}
+                                </td>
+
+                                <td data-label="Facultad">
+                                    {{ prof.facultad?.nombre }}
+                                </td>
+
+                                <td data-label="Título Académico">
+                                    {{ prof.tituloAcademico }}
+                                </td>
+
+                                <td data-label="Estado">{{ prof.usuario?.estado }}</td>
+
+                                <td data-label="Acciones">
+                                    <button type="button" class="btn small" (click)="editarProfesor(prof)">
+                                        Editar
+                                    </button>
+
+                                    <button type="button" class="btn btn-sm"
+                                        [ngClass]="esActivo(prof.usuario) ? 'btn-danger' : 'btn-success'"
+                                        (click)="cambiarEstado(prof)">
+                                        {{ esActivo(prof.usuario) ? 'Desactivar' : 'Activar' }}
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="listaProfesores.length === 0">
+                                <td colspan="8">
+                                    No hay profesores registrados.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+    </main>
+</body>
+
+</html>

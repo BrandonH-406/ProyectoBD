@@ -14,7 +14,7 @@ public class Facultad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_facultad")
-    private int idFacultad;
+    private Integer idFacultad;
 
     @Column(name = "codigo")
     private String codigo;
@@ -23,22 +23,22 @@ public class Facultad {
     private String nombre;
 
     @Column(name = "estado")
-    private char estado;
+    private Character estado;
 
     public Facultad() {
     }
 
-    public Facultad(String codigo, String nombre, char estado) {
+    public Facultad(String codigo, String nombre, Character estado) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.estado = estado;
     }
 
-    public int getIdFacultad() {
+    public Integer getIdFacultad() {
         return idFacultad;
     }
 
-    public void setIdFacultad(int idFacultad) {
+    public void setIdFacultad(Integer idFacultad) {
         this.idFacultad = idFacultad;
     }
 
@@ -58,11 +58,11 @@ public class Facultad {
         this.nombre = nombre;
     }
 
-    public char getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 

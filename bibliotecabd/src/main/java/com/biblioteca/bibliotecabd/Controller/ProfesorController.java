@@ -38,7 +38,7 @@ public class ProfesorController {
     }
 
     @GetMapping("/profesorId/{id}")
-    public Optional<Profesor> getById(@PathVariable("id") int id) {
+    public Optional<Profesor> getById(@PathVariable("id") Integer id) {
         return profesorService.findById(id);
     }
 
@@ -53,7 +53,7 @@ public class ProfesorController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Profesor updateProfesor(@PathVariable("par_id") int ProfesorId, @RequestBody Profesor updateProfesor) {
+    public Profesor updateProfesor(@PathVariable("par_id") Integer ProfesorId, @RequestBody Profesor updateProfesor) {
 
         Optional<Profesor> profesorOptional = profesorService.findById(ProfesorId);
         if (profesorOptional.isPresent()) {
@@ -68,7 +68,7 @@ public class ProfesorController {
     }
 
     @PatchMapping("/update_partial_profesor/{par_id}")
-    public Profesor partialUpdateProfesor(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Profesor partialUpdateProfesor(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Profesor> ProfesorOptional = profesorService.findById(par_id);
 
         if (ProfesorOptional.isPresent()) {
@@ -95,10 +95,15 @@ public class ProfesorController {
     }
 
     @DeleteMapping("/deleteProfesor/{id}")
-    public void DeleteProfesor(@PathVariable("id") int id) {
+    public void DeleteProfesor(@PathVariable("id") Integer id) {
         Optional<Profesor> ProfesorOptional = profesorService.findById(id);
         if (ProfesorOptional.isPresent()) {
             profesorService.delete(ProfesorOptional.get());
         }
+    }
+
+    @GetMapping("/listaProfesorUsuaurio")
+    public List<Profesor> listarEmpleados() {
+        return profesorService.obtenerTodosLosProfesoresUsuario();
     }
 }

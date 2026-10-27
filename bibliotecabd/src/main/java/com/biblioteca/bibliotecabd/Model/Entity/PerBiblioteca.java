@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -38,19 +38,19 @@ public class PerBiblioteca {
     @Column(name = "fecha_contratacion")
     private Date fechaContratacion;
 
-    @OneToMany(mappedBy = "registradoPor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "registradoPor")
     private List<Libro> Libro;
 
-    @OneToMany(mappedBy = "autorizadoPor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "autorizadoPor")
     private List<Renovacion> renovcion;
 
-    @OneToMany(mappedBy = "recibidoPor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recibidoPor")
     private List<Devolucion> devolucion;
 
-    @OneToMany(mappedBy = "cobradoPor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "cobradoPor")
     private List<Multa> multa;
 
-    @OneToMany(mappedBy = "bibliotecario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bibliotecario")
     private List<Prestamo> prestamo;
 
     public PerBiblioteca(){

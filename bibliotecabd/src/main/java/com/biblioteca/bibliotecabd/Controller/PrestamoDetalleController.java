@@ -109,4 +109,9 @@ public class PrestamoDetalleController {
         }
     }
 
+    @GetMapping ("/DetallesPrestamo/{id}")
+    public List<PrestamoDetalle> ListaPorPrestamo(@PathVariable ("id") int idPrestamo ){
+        return prestamoDetalleService.DetallesPrestamo(idPrestamo);
+    }
+
 }

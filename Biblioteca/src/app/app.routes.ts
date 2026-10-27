@@ -9,6 +9,11 @@ import { Renovaciones } from './bibliotecario/renovaciones/renovaciones';
 import { Devoluciones } from './bibliotecario/devoluciones/devoluciones';
 import { Historial } from './bibliotecario/historial/historial';
 import { Perfil } from './bibliotecario/perfil/perfil';
+import { GestionEmpleados } from './gestion-empleados/gestion-empleados';
+import { HistorialLibros } from './historial-libros/historial-libros';
+import { HistorialPrestamos } from './historial-prestamos/historial-prestamos';
+import { Auditoria } from './auditoria/auditoria';
+import { GestionUsuarios } from './gestion-usuarios/gestion-usuarios';
 
 export const routes: Routes = [
     { path: '', component: Login },
@@ -25,4 +30,9 @@ export const routes: Routes = [
             { path: 'perfil', component: Perfil },
         ]
     },
+    { path: 'gestion-empleados', component: GestionEmpleados },
+    { path: 'historial-libros', component: HistorialLibros },
+    { path: 'historial-prestamos', component: HistorialPrestamos },
+    { path: 'auditoria', component: Auditoria },
+    { path: 'gestion-usuarios', component: GestionUsuarios }
 ];

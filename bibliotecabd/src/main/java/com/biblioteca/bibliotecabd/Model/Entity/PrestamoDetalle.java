@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,13 +35,13 @@ public class PrestamoDetalle {
     @Column(name = "estado")
     private String estado;
 
-    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "detalle")
     private List<Renovacion> renovacion;
 
-    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "detalle")
     private List<Devolucion> devolucion;
 
-    @OneToMany(mappedBy = "detalle", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "detalle")
     private List<Multa> multa;
 
     public int getIdDetalle() {

@@ -38,7 +38,7 @@ public class CarreraController {
     }
 
     @GetMapping("/carreraId/{id}")
-    public Optional<Carrera> getById(@PathVariable("id") int id) {
+    public Optional<Carrera> getById(@PathVariable("id") Integer id) {
         return carreraService.findById(id);
     }
 
@@ -52,7 +52,7 @@ public class CarreraController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Carrera updateCarrera(@PathVariable("par_id") int CarreraId, @RequestBody Carrera updateCarrera) {
+    public Carrera updateCarrera(@PathVariable("par_id") Integer CarreraId, @RequestBody Carrera updateCarrera) {
 
         Optional<Carrera> carreraOptional = carreraService.findById(CarreraId);
         if (carreraOptional.isPresent()) {
@@ -68,7 +68,7 @@ public class CarreraController {
     }
 
     @PatchMapping("/update_partial_carrera/{par_id}")
-    public Carrera partialUpdateCarrera(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Carrera partialUpdateCarrera(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Carrera> CarreraOptional = carreraService.findById(par_id);
 
         if (CarreraOptional.isPresent()) {
@@ -98,7 +98,7 @@ public class CarreraController {
     }
 
     @DeleteMapping("/deleteCarrera/{id}")
-    public void DeleteCarrera(@PathVariable("id") int id) {
+    public void DeleteCarrera(@PathVariable("id") Integer id) {
         Optional<Carrera> CarreraOptional = carreraService.findById(id);
         if (CarreraOptional.isPresent()) {
             carreraService.delete(CarreraOptional.get());

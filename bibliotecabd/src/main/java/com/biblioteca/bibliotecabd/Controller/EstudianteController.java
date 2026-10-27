@@ -38,7 +38,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/estudianteId/{id}")
-    public Optional<Estudiante> getById(@PathVariable("id") int id) {
+    public Optional<Estudiante> getById(@PathVariable("id") Integer id) {
         return estudianteService.findById(id);
     }
 
@@ -53,7 +53,8 @@ public class EstudianteController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Estudiante updateEstudiante(@PathVariable("par_id") int EstudianteId, @RequestBody Estudiante updateEstudiante) {
+    public Estudiante updateEstudiante(@PathVariable("par_id") Integer EstudianteId,
+            @RequestBody Estudiante updateEstudiante) {
 
         Optional<Estudiante> estudianteOptional = estudianteService.findById(EstudianteId);
         if (estudianteOptional.isPresent()) {
@@ -69,7 +70,7 @@ public class EstudianteController {
     }
 
     @PatchMapping("/update_partial_estudiante/{par_id}")
-    public Estudiante partialUpdateEstudiante(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Estudiante partialUpdateEstudiante(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Estudiante> EstudianteOptional = estudianteService.findById(par_id);
 
         if (EstudianteOptional.isPresent()) {
@@ -99,10 +100,15 @@ public class EstudianteController {
     }
 
     @DeleteMapping("/deleteEstudiante/{id}")
-    public void DeleteEstudiante(@PathVariable("id") int id) {
+    public void DeleteEstudiante(@PathVariable("id") Integer id) {
         Optional<Estudiante> EstudianteOptional = estudianteService.findById(id);
         if (EstudianteOptional.isPresent()) {
             estudianteService.delete(EstudianteOptional.get());
         }
+    }
+
+    @GetMapping("/listaEstudianteUsuaurio")
+    public List<Estudiante> listarEmpleados() {
+        return estudianteService.obtenerTodosLosEstudiantesUsuario();
     }
 }

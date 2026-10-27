@@ -21,7 +21,7 @@ public class FacultadService {
         return facultadRepository.findAll();
     }
 
-    public Optional<Facultad> findById(int id){
+    public Optional<Facultad> findById(Integer id){
         return facultadRepository.findById(id);
     }
 
