@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,7 +62,7 @@ public class Libro {
     @JoinColumn(name = "registrado_por", nullable = false)
     private PerBiblioteca registradoPor;
 
-    @OneToMany(mappedBy = "libro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "libro")
     private List<Ejemplar> ejemplar;
 
     public Libro(){

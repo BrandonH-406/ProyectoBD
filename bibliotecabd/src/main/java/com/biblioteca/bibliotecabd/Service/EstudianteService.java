@@ -8,28 +8,32 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.bibliotecabd.Model.Entity.Estudiante;
 import com.biblioteca.bibliotecabd.Model.Repository.EstudianteRepository;
 
-@Service 
+@Service
 public class EstudianteService {
 
     private final EstudianteRepository estudianteRepository;
 
-    public EstudianteService(EstudianteRepository estudianteRepository){
+    public EstudianteService(EstudianteRepository estudianteRepository) {
         this.estudianteRepository = estudianteRepository;
     }
 
-    public List<Estudiante> getAllEstudiantes(){
+    public List<Estudiante> getAllEstudiantes() {
         return estudianteRepository.findAll();
     }
 
-    public Optional<Estudiante> findById(int id){
+    public Optional<Estudiante> findById(Integer id) {
         return estudianteRepository.findById(id);
     }
 
-    public Estudiante save(Estudiante estudiante){
+    public Estudiante save(Estudiante estudiante) {
         return estudianteRepository.save(estudiante);
     }
 
-    public void delete(Estudiante estudiante){
+    public void delete(Estudiante estudiante) {
         estudianteRepository.delete(estudiante);
+    }
+
+    public List<Estudiante> obtenerTodosLosEstudiantesUsuario() {
+        return estudianteRepository.findAllConUsuario();
     }
 }

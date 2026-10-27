@@ -33,4 +33,8 @@ public class PrestamoDetalleService {
         prestamoDetalleRepository.delete(prestamoDetalle);
     }
 
+    public List<PrestamoDetalle> DetallesPrestamo (int idPrestamo){
+        return prestamoDetalleRepository.DetallesPrestamo(idPrestamo);
+    }
+
 }

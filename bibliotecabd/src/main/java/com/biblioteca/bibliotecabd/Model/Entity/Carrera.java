@@ -16,7 +16,7 @@ public class Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_carrera")
-    private int idCarrera;
+    private Integer idCarrera;
 
     @ManyToOne
     @JoinColumn(name = "id_facultad", nullable = false)
@@ -29,23 +29,23 @@ public class Carrera {
     private String nombre;
 
     @Column(name = "estado")
-    private char estado;
+    private Character estado;
 
     public Carrera() {
     }
 
-    public Carrera(Facultad facultad, String codigo, String nombre, char estado) {
+    public Carrera(Facultad facultad, String codigo, String nombre, Character estado) {
         this.facultad = facultad;
         this.codigo = codigo;
         this.nombre = nombre;
         this.estado = estado;
     }
 
-    public int getIdCarrera() {
+    public Integer getIdCarrera() {
         return idCarrera;
     }
 
-    public void setIdCarrera(int idCarrera) {
+    public void setIdCarrera(Integer idCarrera) {
         this.idCarrera = idCarrera;
     }
 
@@ -73,11 +73,11 @@ public class Carrera {
         this.nombre = nombre;
     }
 
-    public char getEstado() {
+    public Character getEstado() {
         return estado;
     }
 
-    public void setEstado(char estado) {
+    public void setEstado(Character estado) {
         this.estado = estado;
     }
 

@@ -21,7 +21,7 @@ public class BitaAcceso {
     private long idAcceso;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
+    @JoinColumn(name = "id_usuario", nullable = true)
     private Usuario usuario;
 
     @Column(name = "username_intentado")

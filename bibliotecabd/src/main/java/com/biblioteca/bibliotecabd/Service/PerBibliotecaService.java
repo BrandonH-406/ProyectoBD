@@ -7,14 +7,19 @@ import org.springframework.stereotype.Service;
 
 import com.biblioteca.bibliotecabd.Model.Entity.PerBiblioteca;
 import com.biblioteca.bibliotecabd.Model.Repository.PerBibliotecaRepository;
+import com.biblioteca.bibliotecabd.Model.Repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class PerBibliotecaService {
 
     private final PerBibliotecaRepository perBibliotecaRepository;
+    private final UsuarioRepository usuarioRepository;
 
-    public PerBibliotecaService(PerBibliotecaRepository perBibliotecaRepository) {
+    public PerBibliotecaService(PerBibliotecaRepository perBibliotecaRepository, UsuarioRepository usuarioRepository) {
         this.perBibliotecaRepository = perBibliotecaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public List<PerBiblioteca> getAllPerBiblioteca() {
@@ -38,6 +43,24 @@ public class PerBibliotecaService {
     }
 
     public List<PerBiblioteca> obtenerTodosLosEmpleados() {
-    return perBibliotecaRepository.findAllConUsuario();
-}
+        return perBibliotecaRepository.findAllConUsuario();
+    }
+
+@Transactional
+    public void eliminarBibliotecarioYUsuario(Integer idUsuario) {
+        // 1. Buscamos primero la entidad PerBiblioteca
+        PerBiblioteca bibliotecario = perBibliotecaRepository.findById(idUsuario).orElse(null);
+
+        // 2. BORRAMOS PRIMERO el registro de PerBiblioteca (la tabla hija)
+        if (bibliotecario != null) {
+            perBibliotecaRepository.delete(bibliotecario);
+            // Hacemos un flush manual para asegurar que Oracle ejecute el DELETE de la tabla hija de inmediato
+            perBibliotecaRepository.flush(); 
+        }
+
+        // 3. AHORA SÍ borramos el Usuario (la tabla padre)
+        if (usuarioRepository.existsById(idUsuario)) {
+            usuarioRepository.deleteById(idUsuario);
+        }
+    }
 }

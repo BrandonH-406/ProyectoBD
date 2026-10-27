@@ -35,7 +35,7 @@ public class FacultadController {
     }
 
     @GetMapping("/facultadId/{id}")
-    public Optional<Facultad> getById(@PathVariable("id") int id) {
+    public Optional<Facultad> getById(@PathVariable("id") Integer id) {
         return facultadService.findById(id);
     }
 
@@ -49,7 +49,7 @@ public class FacultadController {
     }
 
     @PutMapping("/update/{par_id}")
-    public Facultad updateFacultad(@PathVariable("par_id") int FacultadId, @RequestBody Facultad updateFacultad) {
+    public Facultad updateFacultad(@PathVariable("par_id") Integer FacultadId, @RequestBody Facultad updateFacultad) {
 
         Optional<Facultad> facultadOptional = facultadService.findById(FacultadId);
         if (facultadOptional.isPresent()) {
@@ -64,7 +64,7 @@ public class FacultadController {
     }
 
     @PatchMapping("/update_partial_facultad/{par_id}")
-    public Facultad partialUpdateFacultad(@PathVariable int par_id, @RequestBody Map<String, Object> updates) {
+    public Facultad partialUpdateFacultad(@PathVariable Integer par_id, @RequestBody Map<String, Object> updates) {
         Optional<Facultad> FacultadOptional = facultadService.findById(par_id);
 
         if (FacultadOptional.isPresent()) {
@@ -91,7 +91,7 @@ public class FacultadController {
     }
 
     @DeleteMapping("/deleteFacultad/{id}")
-    public void DeleteFacultad(@PathVariable("id") int id) {
+    public void DeleteFacultad(@PathVariable("id") Integer id) {
         Optional<Facultad> FacultadOptional = facultadService.findById(id);
         if (FacultadOptional.isPresent()) {
             facultadService.delete(FacultadOptional.get());

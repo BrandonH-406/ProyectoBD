@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Historial de préstamos - Mi Librería</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Poppins:wght@500;600&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="historial-prestamos.css">
+</head>
+
+<body>
+    <div class="strip"></div>
+    <header class="head">
+        <a class="logo" routerLink="/administrador" aria-label="Mi Librería, inicio"><span class="seal">M</span><span
+                class="word">MI LIBRERÍA</span></a>
+        <a class="phone" href="#" (click)="logout()">Cerrar sesión</a>
+    </header>
+    <nav class="nav" aria-label="Principal">
+        <a routerLink="/administrador">Mi perfil</a><a routerLink="/historial-libros">Libros</a><a
+            routerLink="/gestion-empleados">Bibliotecarios</a><a routerLink="/gestion-usuarios">Usuarios</a><a
+            routerLink="/historial-prestamos" class="active">Historial de Préstamos</a><a
+            routerLink="/auditoria">Auditoría</a>
+    </nav>
+
+    <main class="wrap gestion">
+
+        <!-- ===== LISTADO DE PRÉSTAMOS ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Préstamos</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>ID préstamo</th>
+                                <th>Usuario</th>
+                                <th>Bibliotecario</th>
+                                <th>Fecha préstamo</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let prestamo of listaPrestamo">
+                                <td data-label="ID">
+                                    {{ prestamo?.idPrestamo }}
+                                </td>
+
+                                <td data-label="Usuario">
+                                    {{ prestamo?.usuario?.nombres }}
+                                    {{ prestamo?.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="Bibliotecario">
+                                    {{ prestamo?.bibliotecario?.usuario?.nombres }}
+                                    {{ prestamo?.bibliotecario?.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="Fecha">
+                                    {{ prestamo?.fechaPrestamo | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Estado">
+                                    {{ prestamo?.estado }}
+                                </td>
+
+                                <td data-label="Observaciones">
+                                    {{ prestamo?.observaciones }}
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn-detalles" (click)="abrirDetalles(prestamo)">
+                                        Ver detalles
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="!listaPrestamo?.length">
+                                <td colspan="7">
+                                    No hay préstamos registrados.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Ventana de detalles del préstamo (Modal) -->
+                <div class="modal-fondo" *ngIf="ListaDetalle" (click)="cerrarDetalles()">
+                    <div class="modal-dialogo" (click)="$event.stopPropagation()">
+                        <div class="modal-encabezado">
+                            <h2>Detalles del préstamo</h2>
+
+                            <button type="button" class="btn-cerrar" (click)="cerrarDetalles()">
+                                &times;
+                            </button>
+                        </div>
+
+                        <div class="tarjeta">
+                            <section class="seccion">
+                                <div class="tabla-contenedor">
+                                    <table class="tabla-custom">
+                                        <thead>
+                                            <tr>
+                                                <th>Id Detalle</th>
+                                                <th>Id Prestamo</th>
+                                                <th>Libro</th>
+                                                <th>Fecha devolución prevista</th>
+                                                <th>Renovaciones</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let detalle of ListaDetalle">
+                                                <td data-label="ID">
+                                                    {{ detalle?.idDetalle }}
+                                                </td>
+
+                                                <td data-label="prestamo">
+                                                    {{ detalle?.prestamo?.idPrestamo }}
+                                                </td>
+
+                                                <td data-label="libro">
+                                                    {{ detalle?.ejemplar?.libro?.titulo }}
+                                                </td>
+
+                                                <td data-label="Fecha">
+                                                    {{ detalle?.fechaDevolucionPrevista | date: 'dd/MM/yyyy' }}
+                                                </td>
+
+                                                <td data-label="renovaciones">
+                                                    {{ detalle?.renovaciones }}
+                                                </td>
+
+                                                <td data-label="estado">
+                                                    {{ detalle?.estado }}
+                                                </td>
+                                            </tr>
+
+                                            <!-- Mensaje si la lista está vacía -->
+                                            <tr class="fila-vacia" *ngIf="!ListaDetalle?.length">
+                                                <td colspan="6">
+                                                    No hay detalles registrados.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="modal-pie">
+                                    <button type="button" class="btn-cerrar-modal" (click)="cerrarDetalles()">
+                                        Cerrar
+                                    </button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ===== LISTADO DE DEVOLUCIONES ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Devoluciones</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>ID devolución</th>
+                                <th>Fecha devolución</th>
+                                <th>Libro</th>
+                                <th>Recibido por</th>
+                                <th>Condición ejemplar</th>
+                                <th>Días de atraso</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let dev of listaDevoluciones">
+                                <td data-label="ID">
+                                    {{ dev.idDevolucion }}
+                                </td>
+
+                                <td data-label="Fecha">
+                                    {{ dev.fechaDevolucion | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Libro">
+                                    {{ dev.detalle?.ejemplar?.libro?.titulo }}
+                                </td>
+
+                                <td data-label="Recibido por">
+                                    {{ dev.recibidoPor?.usuario?.nombres }}
+                                    {{ dev.recibidoPor?.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="Condición">
+                                    {{ dev.condicionEjemplar }}
+                                </td>
+
+                                <td data-label="Atraso">
+                                    {{ dev.diasAtraso }}
+                                </td>
+
+                                <td data-label="Observaciones">
+                                    {{ dev.observaciones }}
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="!listaDevoluciones?.length">
+                                <td colspan="6">
+                                    No hay devoluciones registradas.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ===== LISTADO DE RENOVACIONES ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Renovaciones</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>ID renovación</th>
+                                <th>Libro</th>
+                                <th>Fecha renovación</th>
+                                <th>Fecha prevista anterior</th>
+                                <th>Fecha prevista nueva</th>
+                                <th>Autorizado por</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let ren of listaRenovaciones">
+                                <td data-label="ID">
+                                    {{ ren.idRenovacion }}
+                                </td>
+
+                                <td data-label="Libro">
+                                    {{ ren.detalle?.ejemplar?.libro?.titulo }}
+                                </td>
+
+                                <td data-label="Fecha renovación">
+                                    {{ ren.fechaRenovacion | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Fecha prevista anterior">
+                                    {{ ren.fechaPrevistaAnt | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Fecha prevista nueva">
+                                    {{ ren.fechaPrevistaNueva | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Autorizado por">
+                                    {{ ren.autorizadoPor?.usuario?.nombres }}
+                                    {{ ren.autorizadoPor?.usuario?.apellidos }}
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="!listaRenovaciones?.length">
+                                <td colspan="5">
+                                    No hay renovaciones registradas.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ===== LISTADO DE MULTAS ===== -->
+        <div class="tarjeta">
+            <section class="seccion">
+                <h1>Listado de Multas</h1>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-custom">
+                        <thead>
+                            <tr>
+                                <th>ID multa</th>
+                                <th>Usuario</th>
+                                <th>Tipo</th>
+                                <th>Monto</th>
+                                <th>Fecha generación</th>
+                                <th>Estado</th>
+                                <th>Fecha pago</th>
+                                <th>Cobrado por</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let multa of listaMultas">
+                                <td data-label="ID">
+                                    {{ multa.idMulta }}
+                                </td>
+
+                                <td data-label="Usuario">
+                                    {{ multa.usuario?.nombres }}
+                                    {{ multa.usuario?.apellidos }}
+                                </td>
+
+                                <td data-label="Tipo">
+                                    {{ multa.tipo }}
+                                </td>
+
+                                <td data-label="Monto">
+                                    {{ multa.monto | number: '1.2-2' }}
+                                </td>
+
+                                <td data-label="Fecha generación">
+                                    {{ multa.fechaGeneracion | date: 'dd/MM/yyyy' }}
+                                </td>
+
+                                <td data-label="Estado">
+                                    {{ multa.estado }}
+                                </td>
+
+                                <td data-label="Fecha pago">
+                                    {{ (multa.fechaPago | date: 'dd/MM/yyyy') || '—' }}
+                                </td>
+
+                                <!-- cobradoPor es null mientras la multa está pendiente -->
+                                <td data-label="Cobrado por">
+                                    <ng-container *ngIf="multa.cobradoPor; else sinCobrar">
+                                        {{ multa.cobradoPor?.usuario?.nombres }}
+                                        {{ multa.cobradoPor?.usuario?.apellidos }}
+                                    </ng-container>
+                                    <ng-template #sinCobrar>—</ng-template>
+                                </td>
+
+                                <td data-label="Observaciones">
+                                    {{ multa.observaciones }}
+                                </td>
+                            </tr>
+
+                            <!-- Mensaje si la lista está vacía -->
+                            <tr class="fila-vacia" *ngIf="!listaMultas?.length">
+                                <td colspan="9">
+                                    No hay multas registradas.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

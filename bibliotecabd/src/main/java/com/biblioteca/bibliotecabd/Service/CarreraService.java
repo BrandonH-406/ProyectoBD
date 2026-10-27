@@ -21,7 +21,7 @@ public class CarreraService {
         return carreraRepository.findAll();
     }
 
-    public Optional<Carrera> findById(int id){
+    public Optional<Carrera> findById(Integer id){
         return carreraRepository.findById(id);
     }
 

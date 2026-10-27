@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -112,5 +113,15 @@ public class PerBibliotecaController {
     @GetMapping("/listarEmpleados")
     public List<PerBiblioteca> listarEmpleados() {
         return perBibliotecaService.obtenerTodosLosEmpleados();
+    }
+
+    @DeleteMapping("/deletePerBibliotecaComplete/{id}")
+    public ResponseEntity<?> eliminarCompleto(@PathVariable Integer id) {
+        try {
+            perBibliotecaService.eliminarBibliotecarioYUsuario(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar: " + e.getMessage());
+        }
     }
 }

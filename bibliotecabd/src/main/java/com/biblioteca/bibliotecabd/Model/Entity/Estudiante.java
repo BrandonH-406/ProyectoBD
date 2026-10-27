@@ -15,7 +15,7 @@ public class Estudiante {
 
     @Id
     @Column(name = "id_usuario")
-    private int idUsuario;
+    private Integer idUsuario;
 
     @OneToOne
     @MapsId
@@ -30,15 +30,15 @@ public class Estudiante {
     private Carrera carrera;
 
     @Column(name = "anio_ingreso")
-    private int anioIngreso;
+    private Integer anioIngreso;
 
     @Column(name = "semestre_actual")
-    private int semestreActual;
+    private Integer semestreActual;
 
     public Estudiante() {
     }
 
-    public Estudiante(Usuario usuario, String carne, Carrera carrera, int anioIngreso, int semestreActual) {
+    public Estudiante(Usuario usuario, String carne, Carrera carrera, Integer anioIngreso, Integer semestreActual) {
         this.usuario = usuario;
         this.carne = carne;
         this.carrera = carrera;
@@ -46,11 +46,11 @@ public class Estudiante {
         this.semestreActual = semestreActual;
     }
 
-    public int getIdUsuario() {
+    public Integer getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
+    public void setIdUsuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
 
@@ -78,20 +78,22 @@ public class Estudiante {
         this.carrera = carrera;
     }
 
-    public int getAnioIngreso() {
+    public Integer getAnioIngreso() {
         return anioIngreso;
     }
 
-    public void setAnioIngreso(int anioIngreso) {
+    public void setAnioIngreso(Integer anioIngreso) {
         this.anioIngreso = anioIngreso;
     }
 
-    public int getSemestreActual() {
+    public Integer getSemestreActual() {
         return semestreActual;
     }
 
-    public void setSemestreActual(int semestreActual) {
+    public void setSemestreActual(Integer semestreActual) {
         this.semestreActual = semestreActual;
     }
+
+    
 
 }

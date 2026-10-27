@@ -21,6 +21,9 @@ import com.biblioteca.bibliotecabd.Model.Entity.Usuario;
 import com.biblioteca.bibliotecabd.Service.RolService;
 import com.biblioteca.bibliotecabd.Service.UsuarioService;
 
+import com.biblioteca.bibliotecabd.Service.BitaAccesoService;
+import jakarta.servlet.http.HttpServletRequest;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/Usuario")
@@ -28,10 +31,13 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
     private final RolService rolService;
+    private final BitaAccesoService bitaAccesoService;
 
-    public UsuarioController(UsuarioService usuarioService, RolService rolService) {
+    public UsuarioController(UsuarioService usuarioService, RolService rolService,
+            BitaAccesoService bitaAccesoService) {
         this.usuarioService = usuarioService;
         this.rolService = rolService;
+        this.bitaAccesoService = bitaAccesoService;
     }
 
     @GetMapping("/listaUsuarios")
@@ -150,19 +156,64 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public Usuario loginAdmin(@RequestBody Usuario Admin) {
-        Optional<Usuario> Administrador = usuarioService.findByUsername(Admin.getUsername());
+    public Usuario loginAdmin(@RequestBody Usuario Admin, HttpServletRequest request) {
+        String ip = obtenerIp(request);
+        String username = Admin.getUsername();
 
+        Optional<Usuario> Administrador = usuarioService.findByUsername(username);
+
+        // 1) Username inexistente
         if (Administrador.isEmpty()) {
+            registrarAcceso(null, username, "FALLIDO", ip, "Usuario inexistente");
             return null;
         }
 
         Usuario user = Administrador.get();
 
+        // 2) Contraseña incorrecta -> suma un intento fallido
         if (!user.getPasswordHash().equals(Admin.getPasswordHash())) {
+            Integer actuales = user.getIntentosFallidos();
+            int nuevos = (actuales == null ? 0 : actuales) + 1;
+            actualizarUsuarioLogin(user, nuevos, null);
+
+            registrarAcceso(user, username, "FALLIDO", ip,
+                    "Contraseña incorrecta (intento " + nuevos + ")");
             return null;
         }
 
+        // 3) Login correcto -> reinicia intentos y guarda último acceso
+        actualizarUsuarioLogin(user, 0, new Timestamp(System.currentTimeMillis()));
+        registrarAcceso(user, username, "EXITOSO", ip, "Inicio de sesión correcto");
         return user;
+    }
+
+    private void actualizarUsuarioLogin(Usuario user, int intentosFallidos, Timestamp ultimoAcceso) {
+        try {
+            user.setIntentosFallidos(intentosFallidos);
+            if (ultimoAcceso != null) {
+                user.setUltimoAcceso(ultimoAcceso);
+            }
+            usuarioService.save(user);
+        } catch (Exception e) {
+            System.err.println("No se pudo actualizar el usuario en el login: " + e.getMessage());
+        }
+    }
+
+    private void registrarAcceso(Usuario usuario, String username, String resultado,
+            String ip, String detalle) {
+        try {
+            bitaAccesoService.registrar(usuario, username, resultado, ip, detalle);
+        } catch (Exception e) {
+            // Un fallo en la bitácora no debe impedir el login
+            System.err.println("No se pudo registrar el acceso: " + e.getMessage());
+        }
+    }
+
+    private String obtenerIp(HttpServletRequest request) {
+        String xff = request.getHeader("X-Forwarded-For");
+        if (xff != null && !xff.isBlank()) {
+            return xff.split(",")[0].trim();
+        }
+        return request.getRemoteAddr();
     }
 }
